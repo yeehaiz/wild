@@ -46,6 +46,7 @@ INSTALLED_APPS = (
 
     # by yxdong
     'event',
+    'mytest',
 )
 
 MIDDLEWARE_CLASSES = (

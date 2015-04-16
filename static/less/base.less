@@ -1,0 +1,241 @@
+@base-light-color: #EA623C;
+@base-dark-color: #4E4E4E;
+
+
+/*** reset ***/
+a {
+  cursor: pointer;
+}
+a:hover {
+  text-decoration: none;
+}
+
+body {
+  background-color: #E6E6E6;
+}
+
+.container {
+  width: 980px;
+}
+
+
+
+/**** 导航   ***/
+#header {
+  background-color: @base-dark-color;
+  a {
+    color: #FEFEFE;
+  }
+
+}
+
+
+/***  筛选部分  ***/
+#main-menu {
+  background-color: @base-light-color;
+  padding: 20px 0 20px 0;
+
+  .menu-container {
+    width : 687px;
+    margin: 0 auto 0 auto;
+  }
+}
+
+
+.nav-menu {
+
+  position: relative;
+  margin: 13px 0 13px 0;
+
+  .menu-key {
+      position: absolute;
+      left: 0;
+      color: white;
+  }
+
+  .menu-value {
+
+    ul {
+      list-style: none outside none;
+      display: table;
+      padding: 0;
+      margin: 0;
+
+      li {
+          text-align: center;
+          position: relative;
+          float: left;
+          display: block;
+      }
+
+      a {
+        display: block;
+      }
+    }
+
+  }
+
+  .menu-key-icon {
+    top: 35px;
+  }
+
+  .menu-value-icon {
+      li {
+        margin-right: 13px;
+      }
+
+      li:last-child {
+        margin-right: 0;
+      }
+
+      img {
+        width: 87px;
+      }
+  }
+
+
+  .menu-key-text {
+      top: 9px;
+  }
+
+  .menu-value-text {
+    background-color: #F4B09B;
+    margin-left: 75px;
+
+    ul {
+      height: 36px;
+      padding-left: 18px;
+    }
+
+    li {
+      margin-right: 13px;
+      margin-right: 10px;
+      margin-top: 5px;
+    }
+
+    a {
+        color: #585858;
+        padding: 3px 10px;
+        display: block;
+        line-height: 20px;
+    }
+    a:hover {
+      background-color: @base-light-color;
+    }
+  }
+}
+
+
+/***  列表部分  ***/
+.wd-event {
+
+  .title {
+      font-size: 24px;
+      color: #000;
+
+  }
+
+  .splider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #ABABAB;
+  }
+
+  .cover {
+    height: 276px;
+    margin-bottom: 15px;
+
+    img {
+      width: 100%;
+    }
+    .box {
+      position: relative;
+      padding: 5px;
+      width: 70px;
+      height: 70px;
+      top: -70px;
+      background-color: @base-light-color;
+      opacity: 0.8;
+      margin-left: auto;
+      margin-right: 0;
+
+      .line1 {
+        font-size: 12px;
+        color: #FFF2DD;
+        opacity: 1;
+      }
+      .line2 {
+        font-size: 12px;
+        color: #FFF2DD;
+        opacity: 1;
+        font-weight: bold;
+        text-align: right;
+      }
+      .line3 {
+        font-size: 20px;
+        color: #FFF2DD;
+        opacity: 1;
+        font-weight: bold;
+        text-align: right;
+      }
+    }
+  }
+
+  .desc {
+    margin-bottom: 20px;
+  }
+
+  .footer {
+    margin: 0 0 0 auto;
+    width: 30%;
+
+    .glyphicon-star{
+      color: @base-light-color;
+    }
+  }
+}
+
+.main-splider {
+  border: solid 2px @base-light-color;
+  margin: 15px 0 30px 0;
+}
+
+/*** 分页 ***/
+.pagging {
+  margin: 30px 0 50px 0;
+
+  a {
+    color: black;
+    font-size: 18px;
+    text-align: center;
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    border-radius: 24px;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  li {
+    display: inline;
+  }
+
+  li:hover a{
+    background-color: @base-light-color;
+    color: white;
+  }
+
+  li.active a{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    background-color: @base-light-color;
+    font-size: 23px;
+    color: white;
+  }
+
+}

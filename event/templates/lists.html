@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+
+{% block content %}
+<div id="main-menu">
+    <div class="menu-container">
+        <div class="nav-menu">
+            <div class="menu-value menu-value-icon">
+                <ul>
+                    <li><a><img src="{% static "images/base/hiking.png" %}"></a></li>
+                    <li><a><img src="{% static "images/base/deep.png" %}"></a></li>
+                    <li><a><img src="{% static "images/base/driving.png" %}"></a></li>
+                    <li><a><img src="{% static "images/base/photo.png" %}"></a></li>
+                    <li><a><img src="{% static "images/base/leisure.png" %}"></a></li>
+                    <li><a><img src="{% static "images/base/island.png" %}"></a></li>
+                    <li><a><img src="{% static "images/base/diving.png" %}"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="nav-menu">
+            <div class="menu-key menu-key-text"><span>玩法</span></div>
+            <div class="menu-value menu-value-text">
+                <ul>
+                    <li><a>全部</a></li>
+                    <li><a>一周内</a></li>
+                    <li><a>双休日</a></li>
+                    <li><a>固定假日</a></li>
+                    <li><a>一个月</a></li>
+                    <li><a>两个月</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9" style="padding-top: 30px;">
+            <div class="wd-event">
+                <div class="title">
+                    【星座路线】一个人，一个世界，探秘吴哥窟
+                </div>
+                <hr class="splider">
+                <div class="cover">
+                    <a>
+                        <img src="{% static "images/resource/product-1.jpg" %}">
+                        <div class="box">
+                            <div class="line1">info</div>
+                            <div class="line2">5天</div>
+                            <div class="line3">299</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="desc">
+                    自由自在，无拘无束，对外界包罗万象的事物的永无止境的好奇心，这两种自由风格结合简直就是为双子座量身定做！
+                </div>
+                <div class="footer">
+                    <span>类型：徒步 | </span>
+                    <span>强度：
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </span>
+                </div>
+            </div>
+
+            <hr class="main-splider">
+
+            <div class="wd-event">
+                <div class="title">
+                    【星座路线】一个人，一个世界，探秘吴哥窟
+                </div>
+                <hr class="splider">
+                <div class="cover">
+                    <a>
+                        <img src="{% static "images/resource/product-1.jpg" %}">
+                        <div class="box">
+                            <div class="line1">info</div>
+                            <div class="line2">5天</div>
+                            <div class="line3">299</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="desc">
+                    自由自在，无拘无束，对外界包罗万象的事物的永无止境的好奇心，这两种自由风格结合简直就是为双子座量身定做！
+                </div>
+                <div class="footer">
+                    <span>类型：徒步 | </span>
+                    <span>强度：
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="pagging">
+                <ul>
+                    <li><a><<</a></li>
+                    <li><a>1</a></li>
+                    <li class="active"><a>2</a></li>
+                    <li><a>3</a></li>
+                    <li><a>4</a></li>
+                    <li><a>5</a></li>
+                    <li><a>6</a></li>
+                    <li><a>>></a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-3" style="border: solid 1px gray; height: 1000px">
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

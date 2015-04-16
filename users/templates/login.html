@@ -1,0 +1,9 @@
+<form action="/user/formlogin/" method="POST">
+    {% csrf_token %}
+    <label>mobile</label>
+    <input type="text" name="mobile">
+    <label>password</label>
+    <input type="password" name="password">
+    <input type="submit">
+
+</form>

@@ -10,6 +10,10 @@ a:hover {
   text-decoration: none;
 }
 
+p {
+  margin: 0;
+}
+
 body {
   background-color: #E6E6E6;
 }
@@ -19,6 +23,21 @@ body {
 }
 
 
+.title {
+  font-size: 24px;
+  color: #000;
+
+}
+
+.splider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 0;
+  border-top: 1px solid #ABABAB;
+}
+
+
+/***************************   列表页  *****************************/
 
 /**** 导航   ***/
 #header {
@@ -129,27 +148,20 @@ body {
 /***  列表部分  ***/
 .wd-event {
 
-  .title {
-      font-size: 24px;
-      color: #000;
-
-  }
-
-  .splider {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: 0;
-    border-top: 1px solid #ABABAB;
-  }
-
   .cover {
     height: 276px;
     margin-bottom: 15px;
+
 
     img {
       width: 100%;
     }
     .box {
+
+      &:hover{
+        opacity: 1;
+      }
+
       position: relative;
       padding: 5px;
       width: 70px;
@@ -238,4 +250,136 @@ body {
     color: white;
   }
 
+}
+
+
+
+/***************************   详情页  *****************************/
+
+.carousel-indicators {
+  width: 25%;
+  right: 0;
+  left: inherit;
+}
+
+.carousel-indicators li {
+  background-color: white;
+  border: 1px solid white;
+}
+.carousel-indicators li.active {
+  background-color: @base-light-color;
+  border: 1px solid @base-light-color;
+}
+
+.carousel-inner .item img {
+  width: 100%;
+}
+
+
+.highlight {
+  color: @base-light-color;
+  font-weight: bold;
+}
+
+.detail-area {
+  line-height: 27px;
+}
+
+.info-grid {
+  padding: 10px 0 10px 0;
+  .grid-col {
+    width: 30%;
+    display: inline-block;
+  }
+}
+
+@tag-title-space: 5px;
+.tag-title {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  margin-left: -@tag-title-space;
+  margin-right: -@tag-title-space;
+
+  .col-md-4 {
+    padding-left: @tag-title-space;
+    padding-right: @tag-title-space;
+  }
+
+  a {
+    display: block;
+    width: 100%;
+    background-color: #CFCFCF;
+    color: black;
+    text-align: center;
+    padding: 4px;
+  }
+  a.active, a:hover{
+    background-color: @base-light-color;
+    color: white;
+  }
+}
+
+
+.date-wrapper {
+  background: url(../images/base/datefgx.jpg) 20px 0px repeat-y ;
+  margin-bottom: 20px;
+}
+
+.date-icon {
+  background: url(../images/base/dateicon.png) no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding-top: 8px;
+  margin-top: -8px;
+  font-size: 16px;
+  text-align: center;
+  color: white;
+
+}
+
+.date-title {
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  .em {
+    color: @base-light-color;
+    font-weight: bold;
+    padding-left: 50px;
+    font-size: 16px;
+  }
+}
+
+.date-body {
+  padding-left: 50px;
+}
+
+.date-footer {
+  padding-left: 50px;
+  margin-top: 20px;
+}
+
+
+.top-title {
+  border-top: solid 4px @base-light-color;
+  margin-top: 40px;
+  margin-bottom: 25px;
+  div {
+    background-color: @base-light-color;
+    width: 180px;
+    margin-left: 10px;
+    padding: 4px;
+    text-align: center;
+    font-size: 16px;
+    color: white;
+  }
+}
+
+
+.info-box .paragraph {
+  padding-left: 50px;
+  margin-bottom: 25px;
 }

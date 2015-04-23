@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="margin-top: 20px;">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="{% static "images/resource/product-1.jpg" %}">
+            </div>
+            <div class="item">
+                <img src="{% static "images/resource/product-1.jpg" %}">
+
+            </div>
+            <div class="item">
+                <img src="{% static "images/resource/product-1.jpg" %}">
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-9 detail-area" style="padding-top: 30px;">
+            <div class="detail-head">
+                <div class="title">
+                    【星座路线】一个人，一个世界，探秘吴哥窟
+                </div>
+                <hr class="splider">
+                <div class="highlight">
+                    行程安排：上海 > 丽水 > 云和 > 武义 > 上海
+                </div>
+                <div class="desc">
+                    自由自在，无拘无束，对外界包罗万象的事物的永无止境的好奇心，这两种自由风格结合简直就是为双子座量身定做！   自由自在，无拘无束，对外界包罗万象的事物的永无止境的好奇心，这两种自由风格结合简直就是为双子座量身定做！
+                </div>
+                <div class="info-grid">
+                    <div class="grid-row">
+                        <div class="grid-col">
+                            活动类型： 徒步
+                        </div>
+                        <div class="grid-col">
+                            体力强度：
+                            <span class="glyphicon glyphicon-star highlight" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-star highlight" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-star highlight" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-col">
+                            旅行时长：4天
+                        </div>
+                        <div class="grid-col">
+                            成团人数：14人
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="splider">
+
+            <div class="row tag-title">
+                <div class="col-md-4">
+                    <a class="active">行程安排</a>
+                </div>
+                <div class="col-md-4">
+                    <a>费用说明</a>
+                </div>
+                <div class="col-md-4">
+                    <a>出行装备</a>
+                </div>
+            </div>
+
+            <div class="date-box" >
+                <div class="date-wrapper">
+                    <div class="date-title">
+                        <span class="date-icon">D1</span>
+                        <span class="em">上海 > 宁国</span>
+                    </div>
+                    <div class="paragraph">
+                        <p>早餐后出发，乘车沿秀美青衣江直上，穿越国内最长的公路隧道二郎山隧道，经历阴阳两重天后抵达大渡河（川西最大最深峡谷），经泸定、情歌故乡康定古城抵达老榆林，从电站开始轻装进山，到达今天的大草坝营地。</p>
+                    </div>
+                    <div class="paragraph">
+                        <p>路程：车程约4小时</p>
+                        <p>住宿：扎营/农家, 可选农家住宿2/4人间, 约50元/人</p>
+                    </div>
+                </div>
+
+                <div class="date-wrapper">
+                    <div class="date-title">
+                        <span class="date-icon">D2</span>
+                        <span class="em">换线盘川铁匠山</em>
+                    </div>
+                    <div class="paragraph">
+                        <p>早餐后出发，乘车沿秀美青衣江直上，穿越国内最长的公路隧道二郎山隧道，经历阴阳两重天后抵达大渡河（川西最大最深峡谷），经泸定、情歌故乡康定古城抵达老榆林，从电站开始轻装进山，到达今天的大草坝营地。</p>
+                    </div>
+                    <div class="paragraph">
+                        <div>路程：车程约4小时</div>
+                        <div>住宿：扎营/农家, 可选农家住宿2/4人间, 约50元/人</div>
+                    </div>
+                </div>
+
+                <div class="date-wrapper">
+                    <div class="date-title">
+                        <span class="date-icon">D3</span>
+                        <span class="em">鬼斧神工仙人洞 > 上海</em>
+                    </div>
+                    <div class="paragraph">
+                        <p>早餐后出发，乘车沿秀美青衣江直上，穿越国内最长的公路隧道二郎山隧道，经历阴阳两重天后抵达大渡河（川西最大最深峡谷），经泸定、情歌故乡康定古城抵达老榆林，从电站开始轻装进山，到达今天的大草坝营地。
+                        </p>
+                        <p>7:00 触发的啊发生的飞飞 </p>
+                        <p>8:00 触发的啊发生的飞飞 </p>
+                        <p><img src="http://img.qunawan.com/ecmme/wan/xl/goods/20150211/201502110919163987.jpg"></p>
+                    </div>
+
+                    <div class="paragraph">
+                        <div>路程：车程约4小时</div>
+                        <div>住宿：扎营/农家, 可选农家住宿2/4人间, 约50元/人</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="top-title">
+                    <div>费用说明</div>
+                </div>
+
+                <div class="paragraph">
+                    <p>次路线费保证成团路线, 请您付款前先资讯下我们的克服人员</p>
+                    <p>费用包含</p>
+                    <p>1. 交通：全程巴士，我们将根据活动人数选择合适的车型</p>
+                    <p>2. 领队：资深领队全程带队</p>
+                    <p>3. 向导：当地向导一名</p>
+                </div>
+                <div class="paragraph">
+                    <p>费用不包含</p>
+                    <p>1. 住宿：农家2/4人间, 预计两晚住宿100元/人</p>
+                    <p>2. 其他：其他可能发生的个人消费</p>
+                </div>
+
+            </div>
+
+            <div class="info-box">
+                <div class="top-title">
+                    <div>出行装备</div>
+                </div>
+
+                <div class="paragraph">
+                    <p>个人餐具、65L背包、25L小包、睡袋（舒适温度5、6、10月-20℃，7、8、9-10℃）、保暖衣服（冲锋衣裤、抓绒衣裤）、速干衣裤、保暖手套、高帮徒步鞋、保温水壶、太阳镜、头灯、头巾、带沿的帽子、登山杖、唇膏、防晒霜（SPF30++以上）、垃圾袋、常备药品、个人用品（如洗漱用品、换洗衣物、袜子等）
+公共装备：高原炊具、炊事帐篷、双人帐篷、对讲机、防潮垫（可自行携带，如需提供请联系客服说明）</p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-3"
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

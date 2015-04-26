@@ -9,7 +9,28 @@ import json
 
 def lists(request):
 
-    return render(request, 'lists.html', {'name': 'hello'})
+    events = Event.objects.all()
+
+    data = [{
+        'title': event.title,
+        'type': event.type.name,
+        'intensity': range(event.intensity),
+        'days': event.days,
+        'price': int(event.price),
+        'cover': json.loads(event.covers)[0],
+        'outline': event.outline,
+
+    } for event in events]
+
+    return render(request, 'lists.html', {
+        'events': data,
+    })
+
+
+
+def lists2(request):
+
+    return render(request, 'lists2.html', {'name': 'hello'})
 
 
 def detail2(request):

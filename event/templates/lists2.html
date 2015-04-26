@@ -47,40 +47,63 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9" style="padding-top: 30px;">
-
-            {% for event in events %}
             <div class="wd-event">
                 <div class="title">
-                    {{event.title}}
+                    【星座路线】一个人，一个世界，探秘吴哥窟
                 </div>
                 <hr class="splider">
                 <div class="cover">
                     <a>
-                        <img src="{{event.cover}}">
+                        <img src="{% static "images/resource/product-1.jpg" %}">
                         <div class="box">
                             <div class="line1">info</div>
-                            <div class="line2">{{event.days}}天</div>
-                            <div class="line3">{{event.price}}</div>
+                            <div class="line2">5天</div>
+                            <div class="line3">299</div>
                         </div>
                     </a>
                 </div>
                 <div class="desc">
-                    {{event.outline}}
+                    自由自在，无拘无束，对外界包罗万象的事物的永无止境的好奇心，这两种自由风格结合简直就是为双子座量身定做！
                 </div>
                 <div class="footer">
-                    <span>类型：{{event.type}} | </span>
+                    <span>类型：徒步 | </span>
                     <span>强度：
-                        {% for i in event.intensity %}
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        {% endfor %}
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                     </span>
                 </div>
             </div>
-            {% if not forloop.last %}
-            <hr class="main-splider">
-            {% endif %}
 
-            {% endfor %}
+            <hr class="main-splider">
+
+            <div class="wd-event">
+                <div class="title">
+                    【星座路线】一个人，一个世界，探秘吴哥窟
+                </div>
+                <hr class="splider">
+                <div class="cover">
+                    <a>
+                        <img src="{% static "images/resource/product-1.jpg" %}">
+                        <div class="box">
+                            <div class="line1">info</div>
+                            <div class="line2">5天</div>
+                            <div class="line3">299</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="desc">
+                    自由自在，无拘无束，对外界包罗万象的事物的永无止境的好奇心，这两种自由风格结合简直就是为双子座量身定做！
+                </div>
+                <div class="footer">
+                    <span>类型：徒步 | </span>
+                    <span>强度：
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </span>
+                </div>
+            </div>
 
 
             <div class="pagging">

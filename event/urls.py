@@ -10,6 +10,7 @@ urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
 
     url(r'^lists/$', views.lists),
+    url(r'^lists2/$', views.lists2),
     url(r'^detail2/$', views.detail2),
     url(r'^detail/(\d+)/$', views.detail),
 

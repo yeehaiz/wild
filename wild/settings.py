@@ -138,3 +138,6 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+SNFS_URL = '/static/snfs/'
+SNFS_DIR = os.path.join(BASE_DIR, "static", "snfs")

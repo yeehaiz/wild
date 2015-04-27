@@ -1,0 +1,75 @@
+{% extends "admin_base.html" %}
+
+{% load staticfiles %}
+
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+    <div class="table-box">
+
+        <div class="box-header">
+            <a href="/admin/events/add/" type="button" class="btn btn-primary">添加线路</a>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>类型</th>
+                    <th>天数</th>
+                    <th>价格</th>
+                    <th>场数</th>
+                    <th>创建时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{event.title}}</td>
+                    <td>{{event.type}}</td>
+                    <td>{{event.days}}</td>
+                    <td>{{event.price}}</td>
+                    <td>{{event.session_count}}</td>
+                    <td>{{event.cre_time}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <nav>
+        <ul class="pagination">
+
+            <li>
+                <a href="/admin/events/?page={{page.prev}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {% for p in page.range %}
+            <li class="{% ifequal p page.current %}active{% endifequal %}">
+                <a href="/admin/events/?page={{p}}">{{p}}</a>
+            </li>
+            {% endfor %}
+
+            <li>
+                <a href="/admin/events/?page={{page.next}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+</div>
+{% endblock %}

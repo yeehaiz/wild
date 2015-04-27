@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-from django.contrib import admin
+#from django.contrib import admin
 
 urlpatterns = [
     # Examples:
@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^$', include('event.urls')),
     url(r'^user/', include('users.urls')),
     url(r'^event/', include('event.urls')),
+    url(r'^admin/', include('admin.urls')),
     url(r'^mytest/', include('mytest.urls')),
 
 ]

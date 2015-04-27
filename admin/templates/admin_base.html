@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet/less" type="text/css" href="{% static "less/admin_base.less""%}" />
+        {% block css %}{% endblock %}
+
+        <title>{% block title %}{% endblock %}</title>
+
+    </head>
+
+
+
+    <body>
+
+        <div id="header">
+            <div class="container" >
+                <div class="navbar-header">
+                    <img src="{% static "images/base/logo.jpg"%}" style="height:50px;">
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">活动</a></li>
+                        <li><a href="#">订单</a></li>
+                    </ul>
+
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">{{user.name}}</a></li>
+                        <li><a href="/user/logout/">登出</a></li>
+                    </ul>
+
+                </nav>
+            </div>
+        </div>
+
+
+
+        {% block content %}{% endblock %}
+
+        <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="http://cdn.bootcss.com/less.js/1.7.0/less.min.js"></script>
+        {% block js %}{% endblock %}
+    </body>
+
+</html>

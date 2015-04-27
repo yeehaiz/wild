@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from event.models import Event
 
 from . import service
+from users.service import user_info
+
 import json
 
 
@@ -12,6 +14,7 @@ def lists(request):
     events = Event.objects.all()
 
     data = [{
+        'id': event.id,
         'title': event.title,
         'type': event.type.name,
         'intensity': range(event.intensity),
@@ -23,6 +26,7 @@ def lists(request):
     } for event in events]
 
     return render(request, 'lists.html', {
+        'user': user_info(request),
         'events': data,
     })
 
@@ -41,6 +45,7 @@ def detail2(request):
 def detail(request, event_id):
     event = Event.objects.get(id=event_id)
     data = {
+        'id': event.id,
         'title': event.title,
         'type': event.type.name,
         'intensity': range(event.intensity),
@@ -57,5 +62,6 @@ def detail(request, event_id):
 
 
     return render(request, 'detail.html', {
+        'user': user_info(request),
         'event': data,
     })

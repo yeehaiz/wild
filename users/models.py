@@ -18,6 +18,18 @@ class User(models.Model):
     balance = models.DecimalField('余额', max_digits=9, decimal_places=2, default=0)
     level = models.IntegerField('会员等级', default=0)
 
+    is_active = models.BooleanField('是否有效', default=True)
+    cre_time = models.DateTimeField('创建时间', auto_now_add=True)
+    upd_time = models.DateTimeField('更新时间', auto_now=True)
+
+
+class Admin(models.Model):
+    user_id = models.IntegerField('用户ID', primary_key = True)
+    level = models.IntegerField('管理员等级')
+    is_super = models.BooleanField('是否拥有超级权限', default = False)
+
+    cre_user_id = models.IntegerField('创建者ID')
+    upd_user_id = models.IntegerField('更新者ID')
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
     upd_time = models.DateTimeField('更新时间', auto_now=True)
 

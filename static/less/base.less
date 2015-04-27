@@ -149,7 +149,7 @@ body {
 .wd-event {
 
   .cover {
-    height: 276px;
+    position: relative;
     margin-bottom: 15px;
 
 
@@ -162,15 +162,16 @@ body {
         opacity: 1;
       }
 
-      position: relative;
+      position: absolute;
+      bottom: 0;
+      right: 0;
       padding: 5px;
+      margin: 0;
       width: 70px;
       height: 70px;
-      top: -70px;
       background-color: @base-light-color;
       opacity: 0.8;
-      margin-left: auto;
-      margin-right: 0;
+
 
       .line1 {
         font-size: 12px;

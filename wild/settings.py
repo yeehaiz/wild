@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # 'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -132,6 +132,8 @@ STATIC_URL = '/static/'
 
 
 # yxdong from here
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )

@@ -1,9 +1,61 @@
-<form action="/user/formlogin/" method="POST">
-    {% csrf_token %}
-    <label>mobile</label>
-    <input type="text" name="mobile">
-    <label>password</label>
-    <input type="password" name="password">
-    <input type="submit">
+{% extends "base.html" %}
 
-</form>
+{% load staticfiles %}
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet/less" type="text/css" href="{% static "less/login.less""%}" />
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+
+{% block content %}
+
+<div id="login-box">
+    <form class="" method="POST">
+        {% csrf_token %}
+
+        {% if data.errmsg %}
+        <div id="login-error" class="alert alert-danger alert-dismissible " role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span>{{data.errmsg}}</span>
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                </div>
+                <input name="username" type="text" class="form-control" value="{{data.username}}" placeholder="Amount">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                </div>
+                <input name="password" type="password" class="form-control"  placeholder="Amount">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-block btn-highlight">登录</button>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

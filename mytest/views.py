@@ -1,9 +1,28 @@
 # coding: utf-8
 
 from django.shortcuts import render
+from django.http.response  import (
+    HttpResponse, HttpResponseForbidden, HttpResponseNotAllowed,
+    HttpResponseRedirect,
+)
 
 from event import models
 import json
+from helpers import decorators
+
+@decorators.login()
+def test(request):
+
+    s = request.session
+    if s.get('cnt', 0) > 0:
+        s['cnt'] = s['cnt'] + 1
+    else:
+        s['cnt'] = 1
+
+    name = request.session.get('username', 'no')
+
+    return HttpResponse(name)
+
 
 def event_1(request):
     e = models.Event()

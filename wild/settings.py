@@ -135,3 +135,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+SNFS_URL = '/static/snfs/'
+SNFS_DIR = os.path.join(BASE_DIR, "static", "snfs")

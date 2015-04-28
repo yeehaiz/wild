@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from django.http.response import HttpResponse
 
 from event.models import Event, EventType
 from users.service import user_info
-from helpers import utils
+from helpers import utils, snfs
 
 import math
 
@@ -48,3 +49,14 @@ def events_add(request):
             'types': types,
             'intensity': range(5),
         })
+
+
+def uploadimage(request):
+    file = request.FILES.get('file')
+    if not file:
+        return HttpResponse()
+
+    imgurl = snfs.save_upload(file)
+
+    
+    

@@ -10,18 +10,41 @@ from event import models
 import json
 from helpers import decorators
 
-@decorators.login()
+
+#@decorators.login()
 def test(request):
 
-    s = request.session
-    if s.get('cnt', 0) > 0:
-        s['cnt'] = s['cnt'] + 1
-    else:
-        s['cnt'] = 1
+    
+    return render(request, 'test.html', {})
 
-    name = request.session.get('username', 'no')
 
-    return HttpResponse(name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def event_1(request):

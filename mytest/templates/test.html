@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+        <link rel="stylesheet" type="text/css" href="{% static "lib/uploader/uploader.css"%}" />
+
+
+
+    </head>
+
+
+
+    <body>
+
+      <ul id="previewsImg" class="uploader">
+	<li class="uploader-add" >
+	  <div class="uploader-btn"></div>
+	  <span class="uploader-tip">上传中</span>
+	  <a class="uploader-cancel" href="javascript:;"></a>
+	</li>
+      </ul>
+
+      <form method="post" action="/admin/uploadimage/" enctype="multipart/form-data">
+	{% csrf_token %}
+	<input name="file" type="file">
+	<input type="submit"></input>
+      <form 
+
+
+
+        <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="http://aui.github.io/artTemplate/dist/template.js"></script>
+
+	<script src="{% static "lib/uploader/uploader.js" %}"></script>
+
+	<script type="text/javascript">
+
+	  $(document).ready(function(){
+
+	    $("#previewsImg").uploader({
+              required:true,
+              maxLength: 10,
+              name:'',
+              width:'80px',
+              height:'80px'
+            }); 
+	  });
+	</script>
+
+
+    </body>
+
+</html>

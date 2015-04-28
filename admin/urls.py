@@ -12,4 +12,6 @@ urlpatterns = [
     url(r'^events/$', views.events),
     url(r'^events/add/$', views.events_add),
 
+    url(r'^uploadimage/$', views.uploadimage),
+
 ]

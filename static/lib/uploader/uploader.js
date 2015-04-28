@@ -22,10 +22,6 @@ $("#uploaderImg").uploader({
 
     function UploadFile(options){
 
-        options = $.extend({
-            uploadUrl: '/admin/uploadimage/',
-        }, options);
-
         var id = Math.random().toString(16).substring(2) + (+new Date());
         var html = '<div id="uploadSnfs'+id+'" style="display: none;">' +
             '<form id="formUploadSnfs'+id+'" class="uploadSnfs" target="frameUploadSnfs'+id+'" method="post" action="'+options.uploadUrl+'" enctype="multipart/form-data">'+
@@ -97,14 +93,14 @@ $("#uploaderImg").uploader({
             var $cancel = $(".uploader-cancel", this);
             var $add = $(".uploader-add", this);
 
-            var uploadFileObj = new UploadFile({
+            var uploadFileObj = new UploadFile($.extend({
                 success:function(url){
                     $.fn.uploader.methods.addItem($this, url);
                 },
                 error:function(){
                     alert('上传文件失败，请重新上传');
                 }
-            });
+            }, opts));
 
             //添加图片
             $this.on("click", ".uploader-btn", function() {
@@ -212,6 +208,7 @@ $("#uploaderImg").uploader({
         required:true,
         width:'140px',
         height:'140px',
+        uploadUrl: '/admin/uploadimage/',
         tplAdd:'\
             <li class="uploader-add" style="width:{{width}};height:{{height}};">\
             <div class="uploader-btn"></div>\

@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from event.models import Event, EventType
 from users.service import user_info
-from helpers import utils, snfs
+from helpers import utils, snfs, decorators
 
 import math
 
@@ -12,7 +12,7 @@ PAGESIZE = 20
 NAVCOUNT = 11
 
 
-
+#@decorators.admin()
 def events(request):
     page = int(request.GET.get('page', 1))
     event_objects = Event.objects.order_by('-cre_time', 'id')[(page-1)*PAGESIZE: page*PAGESIZE]
@@ -48,11 +48,13 @@ def events_add(request):
     if request.method == 'GET':
         return render(request, 'events_edit.html', {
             'types': types,
-            'intensity': range(5),
+            'intensity': range(1, 6),
         })
 
 
+
 @csrf_exempt
+#@decorators.admin()
 def uploadimage(request):
     file = request.FILES.get('file')
     if not file:

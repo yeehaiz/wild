@@ -19,81 +19,48 @@ $("#uploaderImg").uploader({
 */
 (function($){
 
-    var config;
-    function _getConfig(){
-        if(config){
-            return config;
-        }
-        $.ajax({
-            url: '/site/Gettoken',
-            data: {
-                url:location.origin+'/cb_html/uploader/index.html'
-            },
-            dataType: 'json',
-            async: false,
-            success: function(res) {
-                if(res.code==0) {
-                    config = res.data;
-                }
-            }
-        });
-        return config;
-    }
 
     function UploadFile(options){
 
         options = $.extend({
-            token:'',
-            imageAlias:'',
-            domain: "ddxq-shop.u.qiniudn.com"
-        },_getConfig(), options);
+            uploadUrl: '/admin/uploadimage/',
+        }, options);
 
         var id = Math.random().toString(16).substring(2) + (+new Date());
-        var html = '<div id="uploadQiniu'+id+'" style="display: none;">' +
-            '<form id="formUploadQiniu'+id+'" class="uploadQiniu" target="frameUploadQiniu'+id+'" method="post" action="http://up.qiniu.com/" enctype="multipart/form-data">'+
-            '<input id="formUploadQiniuToken'+id+'" class="token" name="token" type="hidden" value="">'+
-            '<input id="formUploadQiniuKey'+id+'" class="key" name="key" type="hidden" value="">'+
-            '<input id="formUploadQiniuFile'+id+'" type="file" name="file" accept="image/jpeg,image/gif,image/png" />'+
+        var html = '<div id="uploadSnfs'+id+'" style="display: none;">' +
+            '<form id="formUploadSnfs'+id+'" class="uploadSnfs" target="frameUploadSnfs'+id+'" method="post" action="'+options.uploadUrl+'" enctype="multipart/form-data">'+
+            '<input id="formUploadSnfsFile'+id+'" type="file" name="file" accept="image/jpeg,image/gif,image/png" />'+
             '</form>'+
-            '<iframe id="frameUploadQiniu'+id+'" name="frameUploadQiniu'+id+'" style="display:none"></iframe>' +
+            '<iframe id="frameUploadSnfs'+id+'" name="frameUploadSnfs'+id+'" style="display:none"></iframe>' +
             '</div>';
-        var $uploadQiniu = $(html);
-        $uploadQiniu.appendTo("body");
+        var $uploadSnfs = $(html);
+        $uploadSnfs.appendTo("body");
 
         var that = this;
         this.id = id;
-        this.$formUploadQiniu = $("#formUploadQiniu"+id);
-        this.$frameUploadQiniu = $("#frameUploadQiniu"+id);
-        this.$file = $('#formUploadQiniuFile'+id);
-        this.$key = $('#formUploadQiniuKey'+id);
-        this.$token = $('#formUploadQiniuToken'+id);
+        this.$formUploadSnfs = $("#formUploadSnfs"+id);
+        this.$frameUploadSnfs = $("#frameUploadSnfs"+id);
+        this.$file = $('#formUploadSnfsFile'+id);
 
         this.$file.on('change', function() {
             var $this = $(this);
-            var fileName = $this.val(),
-                point = fileName.lastIndexOf('.'),
-                type = fileName.substr(point),
-                key = Math.random().toString(16).substring(2) + (+new Date()) + type;
+            var fileName = $this.val();
 
             if(fileName == ''){
                 return false;
             }
 
-            if(key){
-                that.url = 'http://'+options.domain+'/' + key + options.imageAlias;
-                that.$key.val(key);
-                that.$token.val(options.token);
-                that.$formUploadQiniu.submit();
-            }
+            that.$formUploadSnfs.submit();
         });
 
         //上传文件回调
-        this.$frameUploadQiniu.load(function(){
-            var $frame = $(window.frames['frameUploadQiniu'+id].document.body);
-            //若iframe携带返回数据，则显示在feedback中
-            if($frame.html() != '') {
+        this.$frameUploadSnfs.load(function(){
+            var $frame = $(window.frames['frameUploadSnfs'+id].document.body);
+            //若iframe携带返回数据，为图片url
+            var url = $frame.html().trim();
+            if(url != '') {
                 if($.isFunction(options.success)){
-                    options.success(that.url);
+                    options.success(url);
                 }
                 $frame.html('');
                 that.$file.val('');
@@ -240,8 +207,8 @@ $("#uploaderImg").uploader({
     };
 
     $.fn.uploader.defaults = {
-        name:'img_url',
-        maxLength: 2,
+        name:'',
+        maxLength: 1,
         required:true,
         width:'140px',
         height:'140px',

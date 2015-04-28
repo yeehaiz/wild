@@ -14,31 +14,8 @@ from helpers import decorators
 #@decorators.login()
 def test(request):
 
-    
+
     return render(request, 'test.html', {})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

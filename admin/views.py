@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from event.models import Event, EventType
 from users.service import user_info
@@ -51,12 +52,12 @@ def events_add(request):
         })
 
 
+@csrf_exempt
 def uploadimage(request):
     file = request.FILES.get('file')
     if not file:
         return HttpResponse()
 
-    imgurl = snfs.save_upload(file)
+    imgurl = snfs.save_request_file(file)
 
-    
-    
+    return HttpResponse(imgurl)

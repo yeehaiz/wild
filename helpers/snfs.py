@@ -8,7 +8,7 @@ import os
 
 
 
-def save_upload(file):
+def save_request_file(file):
     '''
     upload file, return sub url
     '''
@@ -23,7 +23,7 @@ def save_upload(file):
 
     fileurl = settings.SNFS_URL + '/'.join(filepath_tuple)
     filepath = apply(os.path.join, (settings.SNFS_DIR, ) + filepath_tuple)
-    
+
     # file exists, just return
     if os.path.exists(filepath):
         return fileurl
@@ -45,7 +45,7 @@ def folder_init():
         i_path = os.path.join(settings.SNFS_DIR, i_str)
         if not os.path.exists(i_path):
             os.mkdir(i_path)
-            
+
         for j in range(100):
             j_str = '%02d' % j
             j_path = os.path.join(i_path, j_str)
@@ -57,7 +57,7 @@ def _get_filepath_tuple(strmd5, extname):
     intmd5 = int(strmd5, 16)
     dir_a = '%02d' % (intmd5 % 99)
     dir_b = '%02d' % ((intmd5 / 99) % 99)
-    return (dir_a, dir_b, strmd5 + extname)
+    return (dir_a, dir_b, strmd5 + extname.lower())
 
 
 def _get_ext_name(filename):
@@ -65,5 +65,3 @@ def _get_ext_name(filename):
     if i<0:
         return ''
     return filename[i:]
-        
-    

@@ -53,6 +53,7 @@ def events_add(request):
 
 
 
+
 @csrf_exempt
 #@decorators.admin()
 def uploadimage(request):

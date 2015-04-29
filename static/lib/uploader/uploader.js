@@ -218,7 +218,7 @@ $("#uploaderImg").uploader({
         tplItem:'\
         {{each url}}\
         <li data-url="{{$value}}" style="width:{{width}};height:{{height}};">\
-            <input type="hidden" name="{{maxLength>1 ? name+\'[]\':name}}" value="{{$value}}" />\
+            <input type="hidden" name="{{name}}" value="{{$value}}" />\
             <img src="{{$value}}"  />\
             <a class="uploader-del" href="javascript:;"></a>\
             </li>\

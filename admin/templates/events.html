@@ -27,7 +27,7 @@
                     <th>天数</th>
                     <th>价格</th>
                     <th>场数</th>
-                    <th>创建时间</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +38,12 @@
                     <td>{{event.days}}</td>
                     <td>{{event.price}}</td>
                     <td>{{event.session_count}}</td>
-                    <td>{{event.cre_time}}</td>
+                    <td>
+                        <a href="/event/detail/{{event.id}}/" target="_blank" type="button" class="btn btn-default">预览</a>
+                        <a href="/admin/events/update/{{event.id}}/" type="button" class="btn btn-primary">编辑</a>
+                    </td>
+
+
                 </tr>
                 {% endfor %}
             </tbody>

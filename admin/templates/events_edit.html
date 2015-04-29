@@ -14,32 +14,33 @@
 <div class="container">
 
     <div class="form-container">
-        <form class="form-horizontal" id="event-form" method="POST">
-	   {% csrf_token %}
+        <form class="form-horizontal" id="event-form" method="POST" action="/admin/events/save/">
+            {% csrf_token %}
+            <input name="id" value="{{event.id}}" style="display: none;">
             <div class="form-group">
                 <label for="title"  class="col-sm-2 control-label">标题</label>
                 <div class="col-sm-8">
-                    <input id="title" name="title" type="text" class="form-control" >
+                    <input id="title" name="title" type="text" class="form-control" value="{{event.title}}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="outline" class="col-sm-2 control-label">简介</label>
                 <div class="col-sm-8">
-                    <textarea id="outline" name="outline" type="text" class="form-control"></textarea>
+                    <textarea id="outline" name="outline" type="text" class="form-control">{{event.outline | safe}}</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label for="route" class="col-sm-2 control-label">路线概览</label>
                 <div class="col-sm-8">
-                    <input id="route" name="route" type="text" class="form-control" >
+                    <input id="route" name="route" type="text" class="form-control" value="{{event.route}}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="type" class="col-sm-2 control-label">活动类型</label>
+                <label for="type-id" class="col-sm-2 control-label">活动类型</label>
                 <div class="col-sm-2">
-                    <select class="form-control" id="type" name="type">
+                    <select class="form-control" id="type-id" name="type_id">
                         {% for type in types %}
-                        <option value="{{type.id}}">{{type.name}}</option>
+                        <option value="{{type.id}}" {% ifequal event.type_id type.id %}selected{% endifequal %}>{{type.name}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -47,9 +48,9 @@
             <div class="form-group">
                 <label for="intensity" class="col-sm-2 control-label">活动强度</label>
                 <div class="col-sm-2">
-                    <select class="form-control" id="intensity" name="intensity">
+                    <select class="form-control" id="intensity" name="intensity" >
                         {% for i in intensity %}
-                        <option value="{{i}}">{{i}}</option>
+                        <option value="{{i}}" {% ifequal event.intensity i %}selected{% endifequal %}>{{i}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -57,19 +58,19 @@
             <div class="form-group">
                 <label for="days" class="col-sm-2 control-label">活动天数</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" id="days" name="days">
+                    <input type="text" class="form-control" id="days" name="days" value="{{event.days}}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="places" class="col-sm-2 control-label">活动人数</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" id="places" name="places">
+                    <input type="text" class="form-control" id="places" name="places" value="{{event.places}}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="price" class="col-sm-2 control-label">价格</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" id="price" name="price">
+                    <input type="text" class="form-control" id="price" name="price" value="{{event.price}}">
                 </div>
             </div>
 
@@ -88,7 +89,7 @@
             <div class="form-group">
                 <label for="planning" class="col-sm-2 control-label">行程安排</label>
                 <div class="col-sm-8">
-                    <textarea id="planning" name="planning" type="text" class="form-control" rows="10"></textarea>
+                    <textarea id="planning" name="planning" type="text" class="form-control" rows="10">{{event.planning | safe}}</textarea>
                 </div>
                 <div class="col-sm-2">
                     <ul id="planning-image" class="uploader" >
@@ -103,7 +104,7 @@
             <div class="form-group">
                 <label for="fee-desc" class="col-sm-2 control-label">费用说明</label>
                 <div class="col-sm-8">
-                    <textarea id="fee-desc" name="fee_desc" type="text" class="form-control" rows="6"></textarea>
+                    <textarea id="fee-desc" name="fee_desc" type="text" class="form-control" rows="6">{{event.fee_desc | safe}}</textarea>
                 </div>
                 <div class="col-sm-2">
                     <ul id="fee-desc-image" class="uploader" >
@@ -118,7 +119,7 @@
             <div class="form-group">
                 <label for="equipment" class="col-sm-2 control-label">出行装备</label>
                 <div class="col-sm-8">
-                    <textarea id="equipment" name="equipment" type="text" class="form-control" rows="6"></textarea>
+                    <textarea id="equipment" name="equipment" type="text" class="form-control" rows="6">{{event.equipment | safe}}</textarea>
                 </div>
                 <div class="col-sm-2">
                     <ul id="equipment-image" class="uploader" >
@@ -146,4 +147,9 @@
 
 {% block js %}
 <script src="{% static "js/admin/events_edit.js" %}"></script>
+
+<script>
+ var coversInit = [];
+ coversInit = {{covers | safe}};
+</script>
 {% endblock %}

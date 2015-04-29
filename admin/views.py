@@ -1,12 +1,18 @@
+# coding: utf-8
+
 from django.shortcuts import render
 from django.http.response import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
 from event.models import Event, EventType
 from users.service import user_info
-from helpers import utils, snfs, decorators
+from helpers import utils, snfs, decorators, errors
+
+from .forms import EventSaveForm
 
 import math
+import json
 
 PAGESIZE = 20
 NAVCOUNT = 11
@@ -15,7 +21,7 @@ NAVCOUNT = 11
 #@decorators.admin()
 def events(request):
     page = int(request.GET.get('page', 1))
-    event_objects = Event.objects.order_by('-cre_time', 'id')[(page-1)*PAGESIZE: page*PAGESIZE]
+    event_objects = Event.objects.order_by('-upd_time', 'id')[(page-1)*PAGESIZE: page*PAGESIZE]
     events = [{
         'id': event.id,
         'title': event.title,
@@ -44,13 +50,65 @@ def events(request):
 def events_add(request):
     types = EventType.objects.filter(is_active=True).order_by('-sort')
 
+    return render(request, 'events_edit.html', {
+        'types': types,
+        'intensity': range(1, 6),
+        'covers': '[]',
+    })
 
-    if request.method == 'GET':
-        return render(request, 'events_edit.html', {
-            'types': types,
-            'intensity': range(1, 6),
-        })
 
+def events_update(request, event_id):
+    types = EventType.objects.filter(is_active=True).order_by('-sort')
+
+    event = get_object_or_404(Event, id=event_id)
+
+    return render(request, 'events_edit.html', {
+        'types': types,
+        'intensity': range(1, 6),
+        'covers': event.covers,
+        'event': event,
+    })
+
+
+
+
+@decorators.jsonapi
+def events_save(request):
+    form = EventSaveForm(request.POST)
+    if not form.is_valid():
+        raise errors.ApiError('数据错误')
+
+    covers = request.POST.getlist('covers')
+    if not covers:
+        raise errors.ApiError('无图片')
+
+    if  form.cleaned_data['id']:
+        event = Event.objects.get(id=form.cleaned_data['id'])
+        event.upd_user_id = request.session.get('uid', 0)
+    else:
+        event = Event()
+        event.cre_user_id = request.session.get('uid', 0)
+        event.upd_user_id = request.session.get('uid', 0)
+
+    try:
+        event.title = form.cleaned_data['title']
+        event.type = EventType.objects.get(id=form.cleaned_data['type_id'])
+        event.intensity = form.cleaned_data['intensity']
+        event.days = form.cleaned_data['days']
+        event.places = form.cleaned_data['places']
+        event.price = form.cleaned_data['price']
+        event.covers = json.dumps(covers)
+        event.outline = form.cleaned_data['outline']
+        event.route = form.cleaned_data['route']
+        event.planning = form.cleaned_data['planning']
+        event.fee_desc = form.cleaned_data['fee_desc']
+        event.equipment = form.cleaned_data['equipment']
+        event.save()
+
+    except Exception as e:
+        raise errors.ApiError('存储失败: ' + e.message)
+
+    return None
 
 
 

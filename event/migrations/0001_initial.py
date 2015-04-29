@@ -26,9 +26,9 @@ class Migration(migrations.Migration):
                 ('fee_desc', models.TextField(verbose_name=b'\xe8\xb4\xb9\xe7\x94\xa8\xe8\xaf\xb4\xe6\x98\x8e')),
                 ('equipment', models.TextField(verbose_name=b'\xe5\x87\xba\xe8\xa1\x8c\xe8\xa3\x85\xe5\xa4\x87')),
                 ('cre_time', models.DateTimeField(auto_now_add=True, verbose_name=b'\xe5\x88\x9b\xe5\xbb\xba\xe6\x97\xb6\xe9\x97\xb4')),
-                ('cre_user', models.CharField(max_length=32, verbose_name=b'\xe5\x88\x9b\xe5\xbb\xba\xe7\x94\xa8\xe6\x88\xb7')),
+                ('cre_user_id', models.IntegerField(verbose_name=b'\xe5\x88\x9b\xe5\xbb\xba\xe7\x94\xa8\xe6\x88\xb7ID')),
                 ('upd_time', models.DateTimeField(auto_now=True, verbose_name=b'\xe4\xbf\xae\xe6\x94\xb9\xe6\x97\xb6\xe9\x97\xb4')),
-                ('upd_user', models.CharField(max_length=32, verbose_name=b'\xe4\xbf\xae\xe6\x94\xb9\xe7\x94\xa8\xe6\x88\xb7')),
+                ('upd_user_id', models.IntegerField(verbose_name=b'\xe4\xbf\xae\xe6\x94\xb9\xe7\x94\xa8\xe6\x88\xb7ID')),
             ],
         ),
         migrations.CreateModel(

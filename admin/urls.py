@@ -11,6 +11,8 @@ urlpatterns = [
 
     url(r'^events/$', views.events),
     url(r'^events/add/$', views.events_add),
+    url(r'^events/update/(\d+)/$', views.events_update),
+    url(r'^events/save/$', views.events_save),
 
     url(r'^uploadimage/$', views.uploadimage),
 

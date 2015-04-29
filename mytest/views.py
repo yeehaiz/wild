@@ -24,7 +24,7 @@ def test(request):
 
 
 
-def event_1(request):
+def addevent():
     e = models.Event()
 
     e.title = '【星座路线】一个人，一个世界，探秘吴哥窟'
@@ -76,4 +76,13 @@ def event_1(request):
     e.equipment = '个人餐具、65L背包、25L小包、睡袋（舒适温度5、6、10月-20℃，7、8、9-10℃）、保暖衣服（冲锋衣裤、抓绒衣裤）、速干衣裤、保暖手套、高帮徒步鞋、保温水壶、太阳镜、头灯、头巾、带沿的帽子、登山杖、唇膏、防晒霜（SPF30++以上）、垃圾袋、常备药品、个人用品（如洗漱用品、换洗衣物、袜子等） 公共装备：高原炊具、炊事帐篷、双人帐篷、对讲机、防潮垫（可自行携带，如需提供请联系客服说明）'
 
 
+    e.cre_user_id = e.upd_user_id = 0
+
     e.save()
+
+
+
+def eventtypes():
+    ets = ['徒步', '深度游', '自驾游', '摄影游', '农家乐', '海岛游', '潜水游']
+    for e in ets:
+        models.EventType.objects.create(name = e, sort = 1)

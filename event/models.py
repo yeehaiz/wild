@@ -28,9 +28,9 @@ class Event(models.Model):
     equipment = models.TextField('出行装备')
 
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
-    cre_user = models.CharField('创建用户', max_length=32)
+    cre_user_id = models.IntegerField('创建用户ID')
     upd_time = models.DateTimeField('修改时间', auto_now=True)
-    upd_user = models.CharField('修改用户', max_length=32)
+    upd_user_id = models.IntegerField('修改用户ID')
 
 
 class Session(models.Model):

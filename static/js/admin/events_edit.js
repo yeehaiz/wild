@@ -41,44 +41,60 @@
         });
 
 
-	$("#event-form").validate({
-	    rules: {
-		title: "required",
-		outline: "required",
-		route: "required",
-		type: "required",
-		intensity: "required",
-		days: {
-		    required: true,
-		    digits: true,
-		},
-		places: {
-		    required: true,
-		    digits: true,
-		},
-		price: {
-		    required: true,
-		    number: true,
-		},
-		planning: "required",
-		'fee-desc': "required",
-		equipment: "required",
+        $("#event-form").validate({
+            rules: {
+                title: "required",
+                outline: "required",
+                route: "required",
+                type_id: "required",
+                intensity: "required",
+                days: {
+                    required: true,
+                    digits: true,
+                },
+                places: {
+                    required: true,
+                    digits: true,
+                },
+                price: {
+                    required: true,
+                    number: true,
+                },
+                planning: "required",
+                'fee-desc': "required",
+                equipment: "required",
 
-	    },
+            },
 
-	    submitHandler: function(form) {
-		if ($('#event-images input').length == 0) {
+            submitHandler: function(form) {
+                if ($('#event-images input').length == 0) {
+                    alert('请添加图片');
+                }
+                var data = $(form).serialize();
+                var method = $(form).attr('method');
+                var action = $(form).attr('action');
+                $.ajax({
+                    type: method,
+                    url: action,
+                    data: data,
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        if (data.code) {
+                            alert(data.msg);
+                        }
+                        location.href = "/admin/events/";
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('提交失败');
+                    },
+                });
 
-		    alert('请添加图片');
-		} else {
+            },
 
-		    form.submit();
-		}
-	    },
-
-	});
+        });
 
 
+        $("#event-images").uploader('setValues', coversInit);
 
     });
 

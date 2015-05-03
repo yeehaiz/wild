@@ -28,7 +28,7 @@ def addevent():
     e = models.Event()
 
     e.title = '【星座路线】一个人，一个世界，探秘吴哥窟'
-    e.type = models.EventType.objects.get(id=2)
+    e.type_id = 1
     e.intensity = 3
     e.days = 4
     e.places = 12

@@ -3,32 +3,51 @@ from django.http import HttpResponse
 
 from event.models import Event
 
+
 from . import service
+from . import constants
 from users.service import user_info
+from helpers import utils
 
 import json
+import math
 
 
 def lists(request):
 
-    events = Event.objects.all()
+    page = int(request.GET.get('page', '1'))
+    event_type_id = int(request.GET.get('type', '0'))
+    peroid_type_id = int(request.GET.get('peroid', '0'))
+
+    events = service.list_get_events(page, event_type_id, peroid_type_id)
+    event_count = service.list_get_count(event_type_id, peroid_type_id)
 
     data = [{
-        'id': event.id,
-        'title': event.title,
-        'type': event.type.name,
-        'intensity': range(event.intensity),
-        'days': event.days,
-        'price': int(event.price),
-        'cover': json.loads(event.covers)[0],
-        'outline': event.outline,
+        'id': event['id'],
+        'title': event['title'],
+        'type': event['type_name'],
+        'intensity': range(event['intensity']),
+        'days': event['days'],
+        'price': int(event['price']),
+        'cover': json.loads(event['covers'])[0],
+        'outline': event['outline'],
 
     } for event in events]
+
 
     return render(request, 'lists.html', {
         'user': user_info(request),
         'events': data,
+        'page': service.list_page_nav(page, event_count),
+        'event_types': service.get_eventtype_list(),
+        'peroid_types': constants.get_peroid_types(),
+        'filter': {
+            'event_type_id': event_type_id,
+            'peroid_type_id': peroid_type_id,
+        },
     })
+
+
 
 
 
@@ -47,7 +66,7 @@ def detail(request, event_id):
     data = {
         'id': event.id,
         'title': event.title,
-        'type': event.type.name,
+        'type': service.get_eventtype_name(event.type_id),
         'intensity': range(event.intensity),
         'days': event.days,
         'places': event.places,

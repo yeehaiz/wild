@@ -110,6 +110,10 @@ body {
       img {
         width: 87px;
       }
+
+      li:hover, li.active {
+        background-image: url(/static/images/base/active.png);
+      }
   }
 
 
@@ -138,7 +142,7 @@ body {
         display: block;
         line-height: 20px;
     }
-    a:hover {
+    li:hover, li.active{
       background-color: @base-light-color;
     }
   }
@@ -234,6 +238,13 @@ body {
 
   li {
     display: inline;
+  }
+
+  .prev {
+    margin-right: 5px;
+  }
+  .next {
+    margin-left: 5px;
   }
 
   li:hover a{

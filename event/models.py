@@ -3,18 +3,10 @@
 from django.db import models
 
 
-class EventType(models.Model):
-    name = models.CharField('类型名称', max_length=16)
-    sort = models.IntegerField('排序')
-    is_active = models.BooleanField('是否有效', default=True)
-
-    cre_time = models.DateTimeField('创建时间', auto_now_add=True)
-    upd_time = models.DateTimeField('修改时间', auto_now=True)
-
 
 class Event(models.Model):
     title = models.CharField('标题', max_length=64)
-    type = models.ForeignKey(EventType, verbose_name='活动类型')
+    type_id = models.IntegerField('活动类型')
     intensity = models.IntegerField('活动强度')
     days = models.IntegerField('活动天数')
     places = models.IntegerField('名额')
@@ -36,7 +28,7 @@ class Event(models.Model):
 class Session(models.Model):
     event = models.ForeignKey(Event, verbose_name='活动')
     start_dt = models.DateField('开始日期')
-    num_apply = models.IntegerField('已经报名人数')
+    num_apply = models.IntegerField('已经报名人数', default=0)
 
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
     upd_time = models.DateTimeField('修改时间', auto_now=True)

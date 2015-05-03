@@ -1,0 +1,56 @@
+{% extends "admin_base.html" %}
+
+{% load staticfiles %}
+
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+    <div class="table-box">
+
+        <div class="box-header">
+            <a href="/admin/sessions/{{event_id}}/add/" type="button" class="btn btn-primary">添加场次</a>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>场次ID</th>
+                    <th>开始日期</th>
+                    <th>结束日期</th>
+                    <th>报名人数</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sess in sessions %}
+                <tr>
+                    <td>{{sess.id}}</td>
+                    <td>{{sess.start_dt}}</td>
+                    <td>{{sess.end_dt}}</td>
+                    <td>{{sess.num_apply}}</td>
+                    <td>{{sess.cre_time}}</td>
+                    <td>
+                        <a href="/admin/sessions/delete/{{sess.id}}/" type="button" class="btn btn-danger">删除</a>
+                    </td>
+
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+</div>
+{% endblock %}

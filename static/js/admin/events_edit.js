@@ -6,6 +6,8 @@
             var img = '<img src="' + url + '">';
             var text = textarea.val() + '\n' + img + '\n';
             textarea.val(text);
+            textarea.scrollTop(textarea[0].scrollHeight);
+
         };
     };
 

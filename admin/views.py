@@ -5,8 +5,9 @@ from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
-from event.models import Event, EventType
+from event.models import Event, Session
 from users.service import user_info
+from event.service import get_eventtype_name, get_eventtype_list
 from helpers import utils, snfs, decorators, errors
 
 from .forms import EventSaveForm
@@ -25,7 +26,7 @@ def events(request):
     events = [{
         'id': event.id,
         'title': event.title,
-        'type' : event.type.name,
+        'type' : get_eventtype_name(event.type_id),
         'days' : event.days,
         'price': event.price,
         'session_count': event.session_set.count(),
@@ -48,7 +49,7 @@ def events(request):
 
 
 def events_add(request):
-    types = EventType.objects.filter(is_active=True).order_by('-sort')
+    types = get_eventtype_list()
 
     return render(request, 'events_edit.html', {
         'types': types,
@@ -58,7 +59,7 @@ def events_add(request):
 
 
 def events_update(request, event_id):
-    types = EventType.objects.filter(is_active=True).order_by('-sort')
+    types = get_eventtype_list()
 
     event = get_object_or_404(Event, id=event_id)
 
@@ -92,7 +93,7 @@ def events_save(request):
 
     try:
         event.title = form.cleaned_data['title']
-        event.type = EventType.objects.get(id=form.cleaned_data['type_id'])
+        event.type_id = form.cleaned_data['type_id']
         event.intensity = form.cleaned_data['intensity']
         event.days = form.cleaned_data['days']
         event.places = form.cleaned_data['places']
@@ -109,6 +110,29 @@ def events_save(request):
         raise errors.ApiError('存储失败: ' + e.message)
 
     return None
+
+
+def sessions(request, event_id):
+    sessions = [
+        {
+            'id': sess.id,
+            'start_dt': str(sess.start_dt),
+            'end_dt': utils.df(utils.date_add(sess.start_dt, sess.event.days)),
+            'num_apply': sess.num_apply,
+            'cre_time': str(sess.cre_time),
+        } for sess
+        in Session.objects.filter(event_id=event_id).order_by('-start_dt')
+    ]
+
+
+    return render(request, 'sessions.html', {
+        'user': user_info(request),
+        'sessions': sessions,
+        'event_id': event_id,
+    })
+
+
+
 
 
 

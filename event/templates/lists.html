@@ -16,13 +16,15 @@
         <div class="nav-menu">
             <div class="menu-value menu-value-icon">
                 <ul>
-                    <li><a><img src="{% static "images/base/hiking.png" %}"></a></li>
-                    <li><a><img src="{% static "images/base/deep.png" %}"></a></li>
-                    <li><a><img src="{% static "images/base/driving.png" %}"></a></li>
-                    <li><a><img src="{% static "images/base/photo.png" %}"></a></li>
-                    <li><a><img src="{% static "images/base/leisure.png" %}"></a></li>
-                    <li><a><img src="{% static "images/base/island.png" %}"></a></li>
-                    <li><a><img src="{% static "images/base/diving.png" %}"></a></li>
+                    {% for type in event_types %}
+
+                    <li class="{% ifequal type.id filter.event_type_id %}active{% endifequal %}">
+                        <a href="/event/lists/?type={{type.id}}&peroid={{filter.peroid_type_id}}">
+                            <img src="{{type.icon}}" %}">
+                        </a>
+                    </li>
+                    {% endfor %}
+
                 </ul>
             </div>
         </div>
@@ -31,12 +33,11 @@
             <div class="menu-key menu-key-text"><span>玩法</span></div>
             <div class="menu-value menu-value-text">
                 <ul>
-                    <li><a>全部</a></li>
-                    <li><a>一周内</a></li>
-                    <li><a>双休日</a></li>
-                    <li><a>固定假日</a></li>
-                    <li><a>一个月</a></li>
-                    <li><a>两个月</a></li>
+                    {% for peroid in peroid_types %}
+                    <li class="{% ifequal peroid.id filter.peroid_type_id %}active{% endifequal %}">
+                        <a href="/event/lists/?type={{filter.event_type_id}}&peroid={{peroid.id}}">{{peroid.name}}</a>
+                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -83,18 +84,28 @@
             {% endfor %}
 
 
+            {% if page.range %}
             <div class="pagging">
                 <ul>
-                    <li><a><<</a></li>
-                    <li><a>1</a></li>
-                    <li class="active"><a>2</a></li>
-                    <li><a>3</a></li>
-                    <li><a>4</a></li>
-                    <li><a>5</a></li>
-                    <li><a>6</a></li>
-                    <li><a>>></a></li>
+                    <li class="prev">
+                        <a href="/event/lists/?type={{filter.event_type_id}}&peroid={{filter.peroid_type_id}}&page={{page.prev}}"><<</a>
+                    </li>
+                    {% for pg in page.range %}
+                    <li class="{% ifequal page.current pg %}active{% endifequal %}">
+                        <a href="/event/lists/?type={{filter.event_type_id}}&peroid={{filter.peroid_type_id}}&page={{pg}}">{{pg}}</a>
+                    </li>
+                    {% endfor %}
+                    <li class="next">
+                        <a href="/event/lists/?type={{filter.event_type_id}}&peroid={{filter.peroid_type_id}}&page={{page.next}}">>></a>
+                    </li>
                 </ul>
             </div>
+            {% endif %}
+
+            {% if not page.range %}
+            <h4>暂无数据</h4>
+            {% endif %}
+
 
         </div>
         <div class="col-md-3" style="border: solid 1px gray; height: 1000px">

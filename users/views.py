@@ -9,7 +9,8 @@ from django.db.models import Q
 
 from users.models import (User, Admin)
 from users.service import user_info
-from helpers import utils
+from users import constants
+from helpers import errors, decorators, utils, verifycode
 
 
 def login(request):
@@ -67,3 +68,43 @@ def register(request):
 
     if request.method == 'POST':
         pass
+
+
+@decorators.jsonapi
+def sendverifycode(request):
+    mobile = request.POST.get('mobile', '')
+
+    if not utils.is_mobile(mobile):
+        raise errors.ApiError('无效的手机号')
+
+    if User.objects.filter(mobile=mobile).count() > 0:
+        raise errors.ApiError('手机号已存在')
+
+    success, reason = verifycode.send_vcode(request, mobile, constants.MSG_REGISTER_VERIFY_CODE)
+    if not success:
+        raise errors.ApiError(reason)
+
+    return null
+
+@decorators.jsonapi
+def post_register(request):
+    username = request.POST.get('username', '')
+    mobile = request.POST.get('mobile', '')
+    password = request.POST.get('password', '')
+    vcode = request.POST.get('vcode', '0')
+
+    if not utils.is_username(username):
+        raise errors.ApiError('用户名不符合要求')
+
+    if User.objects.filter(username=username).count() > 0:
+        raise errors.ApiError('用户名已存在')
+
+    if not utils.is_mobile(mobile):
+        raise errors.ApiError('无效的手机号')
+
+    if User.objects.filter(mobile=mobile).count() > 0:
+        raise errors.ApiError('手机号已存在')
+
+    success, reason = verifycode.verify(mobile, vcode)
+    if not success:
+        raise errors.ApiError(reason)

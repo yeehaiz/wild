@@ -44,3 +44,12 @@ class Coupon(models.Model):
 
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
     upd_time = models.DateTimeField('更新时间', auto_now=True)
+
+
+class VerifyCode(models.Model):
+    mobile = models.CharField('手机', max_length=16)
+    vcode = models.IntegerField('验证码')
+    ip = models.GenericIPAddressField('IP地址')
+    vtimes = models.IntegerField('验证错误次数')
+    cre_time = models.DateTimeField('创建时间', auto_now_add=True)
+    upd_time = models.DateTimeField('更新时间', auto_now=True)

@@ -1,10 +1,30 @@
+import re
 import datetime
 import hashlib
 
 
+REG_MOBILE = re.compile(r'1[34578]{1}\d{9}$')
+REG_USERNAME = re.compile(r'[a-zA-Z][a-z0-9A-Z_]{2,}$')
+
 def md5(s):
     hash_md5 = hashlib.md5(s)
     return hash_md5.hexdigest()
+
+
+def is_mobile(mobile):
+    return bool(REG_MOBILE.match(mobile))
+
+
+def is_username(username):
+    return bool(REG_USERNAME.match(username))
+
+
+def get_client_ip(request):
+    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        return request.META['HTTP_X_FORWARDED_FOR']
+    else:
+        return request.META['REMOTE_ADDR']
+
 
 
 def paging_range(current, page_count, nav_count):

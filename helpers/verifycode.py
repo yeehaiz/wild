@@ -14,6 +14,9 @@ VCODE_MAX_VERIRY_COUNT = 5
 
 
 def generate_vcode():
+    #debug
+    return 999999
+
     random.randint(100000, 999999)
 
 
@@ -33,13 +36,13 @@ def send_vcode(request, mobile, msg_template):
     count = VerifyCode.objects.filter(mobile=mobile,
                 cre_time__gt = now - MOBILE_RESTRICT[0]).count()
     if count >= MOBILE_RESTRICT[1]:
-        return False, '验证码请求过于频繁'
+        return False, '验证码获取过于频繁, 请稍后再试'
 
     # ip restrict
     count = VerifyCode.objects.filter(ip=ip,
                 cre_time__gt = now - IP_RESTRICT[0]).count()
     if count >= IP_RESTRICT[1]:
-        return False, '验证码请求过于频繁'
+        return False, '验证码获取过于频繁, 请稍后再试'
 
     # send
     vcode = generate_vcode()
@@ -60,11 +63,11 @@ def verify(mobile, vcode):
     @return (success, reason)
     '''
     expire_time = datetime.datetime.now() - VCODE_EXPIRE_TIME
-    vcs = VerifyCode.filter(mobile=mobile, cre_time__gt=expire_time).order_by('-cre_time')[:1]
+    vcs = VerifyCode.objects.filter(mobile=mobile, cre_time__gt=expire_time).order_by('-cre_time')[:1]
     if not vcs:
         return False, '请重新获取验证码'
 
-    vc = vsc[0]
+    vc = vcs[0]
     if vc.vtimes >= VCODE_MAX_VERIRY_COUNT:
         return False, '请重新获取验证码'
 

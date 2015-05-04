@@ -23,11 +23,8 @@ def list_get_events(page, event_type_id, peroid_type_id):
 
     query = '''
     select
-      evn.*,
-      evntype.name
+      evn.*
     from event_event evn
-    left join event_eventtype evntype
-    on evn.type_id = evntype.id
     where %(type_where)s
     and evn.id in
     (
@@ -67,7 +64,6 @@ def list_get_events(page, event_type_id, peroid_type_id):
             'upd_time': row[14],
             'upd_user_id': row[15],
             'type_id': row[16],
-            'type_name': row[17],
         })
 
     return data;

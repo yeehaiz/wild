@@ -4,7 +4,7 @@ import hashlib
 
 
 REG_MOBILE = re.compile(r'1[34578]{1}\d{9}$')
-REG_USERNAME = re.compile(r'[a-zA-Z][a-z0-9A-Z_]{2,}$')
+REG_USERNAME = re.compile(r'[a-zA-Z][a-z0-9A-Z_]{2,17}$')
 
 def md5(s):
     hash_md5 = hashlib.md5(s)
@@ -17,6 +17,9 @@ def is_mobile(mobile):
 
 def is_username(username):
     return bool(REG_USERNAME.match(username))
+
+def is_valid_password(password):
+    return True
 
 
 def get_client_ip(request):

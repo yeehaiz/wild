@@ -27,7 +27,7 @@ def login(request):
                 'user': user_info(request),
                 'data': {
                     'username': username,
-                    'errmsg': '密码错误',
+                    'errmsg': '用户不存在',
                 }
             })
 
@@ -63,13 +63,22 @@ def logout(request):
 
 
 def register(request):
-    if request.method == 'GET':
-        return render(request, 'register.html', {})
-
-    if request.method == 'POST':
-        pass
+    return render(request, 'register.html', {})
 
 
+@decorators.jsonapi
+def register_check_username(request):
+    username = request.GET.get('username', '')
+    if not utils.is_username(username):
+        raise errors.ApiError(constants.RULE_USERNAME)
+
+    if User.objects.filter(username=username).count() > 0:
+        raise errors.ApiError('该用户名已被注册')
+
+    return None
+
+
+@csrf_exempt
 @decorators.jsonapi
 def sendverifycode(request):
     mobile = request.POST.get('mobile', '')
@@ -84,27 +93,51 @@ def sendverifycode(request):
     if not success:
         raise errors.ApiError(reason)
 
-    return null
+    return None
+
 
 @decorators.jsonapi
-def post_register(request):
+def register_post(request):
     username = request.POST.get('username', '')
     mobile = request.POST.get('mobile', '')
     password = request.POST.get('password', '')
-    vcode = request.POST.get('vcode', '0')
+    vcode_str = request.POST.get('vcode', '0')
 
     if not utils.is_username(username):
-        raise errors.ApiError('用户名不符合要求')
+        raise errors.ApiError(constants.RULE_USERNAME)
 
     if User.objects.filter(username=username).count() > 0:
-        raise errors.ApiError('用户名已存在')
+        raise errors.ApiError('该用户名已被注册')
 
     if not utils.is_mobile(mobile):
         raise errors.ApiError('无效的手机号')
 
     if User.objects.filter(mobile=mobile).count() > 0:
-        raise errors.ApiError('手机号已存在')
+        raise errors.ApiError('该手机号已被注册')
+
+    try:
+        vcode = int(vcode_str)
+    except ValueError:
+        raise errors.ApiError('请输入正确的验证码')
 
     success, reason = verifycode.verify(mobile, vcode)
     if not success:
         raise errors.ApiError(reason)
+
+    if not utils.is_valid_password(password):
+        raise errors.ApiError('密码不符合规范')
+
+    # 验证成功, 创建用户
+    user = User()
+    user.username = username
+    user.mobile = mobile
+    user.password = utils.md5(password)
+    user.save()
+
+    # 设置session
+    user_admin = Admin.objects.filter(user_id=user.id)
+    request.session['admin'] = user_admin[0].level if user_admin else 0
+    request.session['uid'] = user.id
+    request.session['username'] = user.username
+
+    return None

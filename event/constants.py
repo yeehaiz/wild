@@ -3,7 +3,7 @@
 from helpers import utils
 from datetime import date
 
-LIST_PAGE_SIZE = 2
+LIST_PAGE_SIZE = 5
 LIST_NAV_COUNT = 11
 
 

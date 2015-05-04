@@ -25,7 +25,7 @@ def lists(request):
     data = [{
         'id': event['id'],
         'title': event['title'],
-        'type': event['type_name'],
+        'type': service.get_eventtype_name(event['type_id']),
         'intensity': range(event['intensity']),
         'days': event['days'],
         'price': int(event['price']),

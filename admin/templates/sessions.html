@@ -16,7 +16,35 @@
     <div class="table-box">
 
         <div class="box-header">
-            <a href="/admin/sessions/{{event_id}}/add/" type="button" class="btn btn-primary">添加场次</a>
+            <a href="/event/detail/{{event.id}}/" target="_blank" class="box-title">{{event.title}}</a>
+            <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSession">添加场次</button>
+
+            <div class="modal fade" id="addSession" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form method="POST" action="/admin/sessions/add/">
+                        {% csrf_token %}
+                        <input type="hidden" name="event_id" value="{{event.id}}">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="exampleModalLabel">添加场次</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label">开始日期</label>
+                                    <input type="date" class="form-control" name="start_dt" id="start-dt" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">添加</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
 
         <table class="table">

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from django.shortcuts import render
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
@@ -19,7 +19,7 @@ PAGESIZE = 20
 NAVCOUNT = 11
 
 
-#@decorators.admin()
+@decorators.admin()
 def events(request):
     page = int(request.GET.get('page', 1))
     event_objects = Event.objects.order_by('-upd_time', 'id')[(page-1)*PAGESIZE: page*PAGESIZE]
@@ -48,6 +48,7 @@ def events(request):
     })
 
 
+@decorators.admin()
 def events_add(request):
     types = get_eventtype_list()
 
@@ -58,6 +59,7 @@ def events_add(request):
     })
 
 
+@decorators.admin()
 def events_update(request, event_id):
     types = get_eventtype_list()
 
@@ -73,6 +75,7 @@ def events_update(request, event_id):
 
 
 
+@decorators.admin()
 @decorators.jsonapi
 def events_save(request):
     form = EventSaveForm(request.POST)
@@ -112,7 +115,10 @@ def events_save(request):
     return None
 
 
+@decorators.admin()
 def sessions(request, event_id):
+    event = Event.objects.get(id=event_id)
+
     sessions = [
         {
             'id': sess.id,
@@ -128,16 +134,35 @@ def sessions(request, event_id):
     return render(request, 'sessions.html', {
         'user': user_info(request),
         'sessions': sessions,
-        'event_id': event_id,
+        'event': event,
     })
 
 
+@decorators.admin()
+def sessions_add(request):
+    event_id = request.POST.get('event_id')
+    start_dt = request.POST.get('start_dt')
 
+    sess = Session()
+    sess.event = Event.objects.get(id=event_id)
+    sess.start_dt = start_dt
 
+    sess.save()
+
+    return HttpResponseRedirect('/admin/sessions/' + event_id + '/')
+
+@decorators.admin()
+def sessions_delete(request, session_id):
+    sess = Session.objects.get(id=session_id)
+    if sess.num_apply > 0:
+        return HttpResponse('已有人报名, 无法删除')
+
+    sess.delete()
+    return HttpResponseRedirect('/admin/events/')
 
 
 @csrf_exempt
-#@decorators.admin()
+@decorators.admin()
 def uploadimage(request):
     file = request.FILES.get('file')
     if not file:

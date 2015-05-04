@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^events/save/$', views.events_save),
 
     url(r'^sessions/(\d+)/$', views.sessions),
+    url(r'^sessions/add/$', views.sessions_add),
+    url(r'^sessions/delete/(\d+)/$', views.sessions_delete),
 
     url(r'^uploadimage/$', views.uploadimage),
 

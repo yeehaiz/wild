@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet/less" type="text/css" href="{% static "less/register.less""%}" />
+{% endblock %}
+
+{% block js %}
+<script src="{% static "js/users/register.js"%}"></script>
+{% endblock %}
+
+
+{% block content %}
+
+<div id="register-box">
+    <form class="" id="register-form">
+        {% csrf_token %}
+        <input id="redirectURL" type="hidden" name="redirectURL" value="/">
+
+        <div id="register-error-container"> </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </div>
+                <input id="username" name="username" type="text" class="form-control" placeholder="用户名" >
+                <span id="username-ok" class="glyphicon glyphicon-ok form-control-feedback hide" aria-hidden="true" style="color: green;"></span>
+                <span id="username-remove" class="glyphicon glyphicon-remove form-control-feedback hide" aria-hidden="true" style="color: red;"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                </div>
+                <input id="mobile" name="mobile" type="text" class="form-control" placeholder="手机号">
+                <div id="btn-vcode" class="btn btn-default input-group-addon">获取验证码</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                </div>
+                <input id="vcode" name="vcode" type="text" class="form-control"  placeholder="手机验证码">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                </div>
+                <input id="password" name="password" type="password" class="form-control"  placeholder="密码">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button id="submit" type="button" class="btn btn-block btn-highlight">注册</button>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

@@ -1,3 +1,5 @@
+# coding: utf-8
+
 """
 Django settings for wild project.
 
@@ -21,6 +23,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+from . import private
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -98,7 +101,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'wild',
         'USER': 'wild',
-        'PASSWORD': 'wild123',
+        'PASSWORD': private.MYSQL_PASSWORD,
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -141,3 +144,9 @@ STATICFILES_DIRS = (
 
 SNFS_URL = '/static/snfs/'
 SNFS_DIR = os.path.join(BASE_DIR, "static", "snfs")
+
+# smss service
+SMSS = {
+    'url': 'http://yunpian.com/v1/sms/send.json',
+    'apikey': private.SMSS_APIKEY,
+}

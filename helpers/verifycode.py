@@ -15,9 +15,9 @@ VCODE_MAX_VERIRY_COUNT = 5
 
 def generate_vcode():
     #debug
-    return 999999
+    #return 999999
 
-    random.randint(100000, 999999)
+    return random.randint(100000, 999999)
 
 
 def send_vcode(request, mobile, msg_template):

@@ -27,5 +27,5 @@ def send(mobile, msg):
     except ValueError:
         raise errors.ApiError('短信接口调用失败')
 
-    if data['code'] > 0:
-        raise errors.ApiError('短信发送失败')
+    if data['code'] != 0:
+        raise errors.ApiError(data['msg'])

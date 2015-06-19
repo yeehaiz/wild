@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     # by yxdong
     'wild',
     'event',
+    'order',
     'users',
     'admin',
     'mytest',

@@ -29,6 +29,7 @@ def login(func):
         if request.session.get('uid') <= 0:
             return HttpResponseRedirect('/user/login/?redirectURL=' + request.path)
         return apply(func, (request,)+tuple_args, dict_args)
+
     return _wrapper
 
 

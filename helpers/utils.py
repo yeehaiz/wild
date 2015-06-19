@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import re
 import datetime
 import hashlib
@@ -5,6 +7,18 @@ import hashlib
 
 REG_MOBILE = re.compile(r'1[34578]{1}\d{9}$')
 REG_USERNAME = re.compile(r'[a-zA-Z][a-z0-9A-Z_]{2,17}$')
+
+WEEKS = [
+    '周一',
+    '周二',
+    '周三',
+    '周四',
+    '周五',
+    '周六',
+    '周日',
+]
+
+
 
 def md5(s):
     hash_md5 = hashlib.md5(s)
@@ -52,6 +66,10 @@ def paging_range(current, page_count, nav_count):
 def df(dt):
     '''date format'''
     return dt.strftime('%Y-%m-%d')
+
+def df_week(dt):
+    return df(dt) + ' ' + WEEKS[dt.weekday()]
+
 
 def date_add(dt, days):
     return (dt +  datetime.timedelta(days))

@@ -53,3 +53,16 @@ class VerifyCode(models.Model):
     vtimes = models.IntegerField('验证错误次数', default=0)
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
     upd_time = models.DateTimeField('更新时间', auto_now=True)
+
+
+class FrequentMember(models.Model):
+    CERT_TYPES = ((1, '身份证'), (2, '护照'), (3, '军官证'), (4, '回乡证'))
+    SEX_CHOICES = (('m', '男'), ('f', '女'))
+
+    user = models.ForeignKey(User, verbose_name='用户')
+    name = models.CharField('姓名', max_length=16)
+    mobile = models.CharField('手机', max_length=16)
+    cert_type = models.IntegerField('证件类型', choices=CERT_TYPES)
+    cert = models.CharField('证件号', max_length=32)
+    sex = models.CharField('性别', max_length=1, choices=SEX_CHOICES)
+    birthday = models.DateField('生日')

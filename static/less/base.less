@@ -1,6 +1,6 @@
 @base-light-color: #EA623C;
 @base-dark-color: #4E4E4E;
-
+@base-light-active-color: #ff7037;
 
 /*** reset ***/
 a {
@@ -35,6 +35,69 @@ body {
   border: 0;
   border-top: 1px solid #ABABAB;
 }
+
+.counter-select {
+  height: 32px;
+
+  .add, .delete {
+    width: 24px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border: 1px solid #dfdfdf;
+    float: left;
+    color: #dfdfdf;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+  }
+
+  .add.active, .delete.active {
+    color: @base-light-color;
+  }
+
+  .num {
+    width: 43px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-top: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    border-left: 0 none;
+    border-right: 0 none;
+    float: left;
+  }
+}
+
+
+.btn-highlight {
+  color: white;
+  background-color: @base-light-color;
+  border-color: @base-light-color;
+
+}
+
+.btn-highlight.focus, .btn-highlight:focus {
+  color: white;
+  background-color: @base-light-color;
+  border-color: @base-light-color;
+}
+
+.btn-highlight.hover, .btn-highlight:hover
+{
+  color: white;
+  background-color: @base-light-active-color;
+  border-color: @base-light-active-color;
+}
+
+.btn-highlight.active, .btn-highlight:active {
+  color: white;
+  background-color: @base-light-active-color;
+  border-color: @base-light-active-color;
+}
+
+
+
 
 
 /***************************   列表页  *****************************/
@@ -372,7 +435,7 @@ body {
 
 
 .top-title {
-  border-top: solid 4px @base-light-color;
+  border-top: solid 6px @base-light-color;
   margin-top: 40px;
   margin-bottom: 25px;
   div {
@@ -390,4 +453,25 @@ body {
 .info-box .paragraph {
   padding-left: 50px;
   margin-bottom: 25px;
+}
+
+.detail-order-box {
+  background-color: white;
+  border-top: solid 4px @base-light-color;
+  margin-top: 30px;
+
+  .price {
+    color: @base-light-color;
+    font-size: 40px;
+    margin-left: 15px;
+  }
+
+  hr {
+    margin: 0;
+  }
+
+  .select {
+    padding: 15px 15px 15px 15px;
+  }
+
 }

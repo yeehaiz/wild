@@ -11,7 +11,7 @@ from helpers import utils
 
 import json
 import math
-
+import datetime
 
 def lists(request):
 
@@ -63,6 +63,18 @@ def detail2(request):
 
 def detail(request, event_id):
     event = Event.objects.get(id=event_id)
+    sessions = event.session_set.filter(start_dt__gt=datetime.date.today()).order_by('start_dt')
+    sesses = [
+        {
+            'session_id': sess.id,
+            'date_desc': utils.df_week(sess.start_dt),
+            'places': sess.event.places - sess.num_apply,
+
+        } for sess in sessions
+        if sess.num_apply < sess.event.places
+    ]
+
+
     data = {
         'id': event.id,
         'title': event.title,
@@ -77,6 +89,7 @@ def detail(request, event_id):
         'planning': service.planning_parse(event.planning),
         'fee_desc': service.text_parse(event.fee_desc),
         'equipment': service.text_parse(event.equipment),
+        'sesses': sesses,
     }
 
 

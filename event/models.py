@@ -32,3 +32,25 @@ class Session(models.Model):
 
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
     upd_time = models.DateTimeField('修改时间', auto_now=True)
+
+
+class Equipment(models.Model):
+    name = models.CharField('装备名', max_length=16)
+    rent = models.DecimalField('租金', max_digits=9, decimal_places=2)
+    price = models.DecimalField('价格', max_digits=9, decimal_places=2)
+    storage = models.IntegerField('库存数量')
+    num_out = models.IntegerField('借出数量')
+
+    is_active = models.BooleanField('是否有效', default=True)
+    cre_time = models.DateTimeField('创建时间', auto_now_add=True)
+    upd_time = models.DateTimeField('修改时间', auto_now=True)
+
+
+class EquipmentGroup(models.Model):
+    name = models.CharField('组合名', max_length=64)
+    equipments = models.ManyToManyField(Equipment, verbose_name='装备们')
+    discount = models.DecimalField('折扣', max_digits=2, decimal_places=1)
+
+    is_active = models.BooleanField('是否有效', default=True)
+    cre_time = models.DateTimeField('创建时间', auto_now_add=True)
+    upd_time = models.DateTimeField('修改时间', auto_now=True)

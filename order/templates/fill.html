@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+{% block css %}
+<link rel="stylesheet/less" type="text/css" href="{% static "less/order.less"%}" />
+{% endblock %}
+
+{% block js %}
+<script src="{% static "lib/bootstrap/js/bootstrap-datepicker.js" %}"></script>
+<script src="{% static "js/wild/base.js" %}"></script>
+<script src="{% static "js/order/fill.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="processor">
+            <div class="col-xs-4">
+                <div class="step active">STEP 1 填写订单</div>
+            </div>
+            <div class="col-xs-4">
+                <div class="step">
+                    STEP 2 确认支付
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="step">
+                    STEP 3 完成订单
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-9" style="padding-top: 30px;">
+            <div class="title">{{session.event.title}}</div>
+            <hr class="splider">
+
+            <div>出行人信息</div>
+            <div class="contact-main">
+                <span class="contact-title">常用出行人：</span>
+                <div class="contact-con">
+                    <ul class="contact-list clearfix" id="rsm">
+                        {% for fm in frequent_members %}
+                        <li class="c-item">
+                            <label class="item-check">
+                                <input name="person_{{fm.id}}" id="person_{{fm.id}}" type="checkbox" class="input-checkbox">
+                                <span class="input-hack icon-d icon-hackc-d"></span>
+                                <span class="t">{{fm.name}}</span>
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pasger-main">
+                <div class="pasger-list">
+                    {% for i in num_apply_range %}
+                        {% if forloop.first %}
+                        <div class="pasger-box pasger-first" id="pasger-box_{{i}}">
+                        {% else %}
+                        <div class="pasger-box pasger-last" id="pasger-box_{{i}}">
+                        {% endif %}
+                        <div class="pasger-no">第<em>{{i}}</em>位</div>
+                        <div class="pasger-con">
+                            <div class="pasger-form">
+                                <div class="form-field form-first">
+                                    <label for="qt_name_{{i}}" class="labl-text">姓名：</label>
+                                    <div class="input-cgroup">
+                                        <input type="text" name="person_name_{{i}}" id="qt_name_{{i}}" class="input-text {required:true, rangelength:[2,10], messages:{required:'请填写真实的姓名', rangelength:'请填写正确的姓名'}}" placeholder="所填证件的姓名">
+                                        <div class="note-tips" title="1、请您准确填写与登记证件上一致的出行人姓名；2、若含有生僻字填写规范如下：若名是生僻字，请将该生僻字和其后的字用拼音代替，如：“赵赟子”填写为“赵yunzi”；若姓是生僻字，则姓名全部以拼音代替，如：“赟子丽”填写为“yunzili”。">
+                                            <i class="icon-d icon-helpg-d"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label for="qt_phone_{{i}}" class="labl-text">手机：</label>
+                                    <div class="input-cgroup">
+                                        <input type="text" name="person_phone_{{i}}" id="qt_phone_{{i}}" class="input-text {required:true, checkMobile:true, messages:{required:'请填写手机号', checkMobile:'请填写正确的手机号'}}" placeholder="请确保手机能收到短信">
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label for="qt_credentials_no_{{i}}" class="labl-text">证件：</label>
+                                    <div class="input-cgroup">
+                                        <div class="selt-box">
+                                            <select class="selt-main" name="qt_credentials_no_{{i}}" id="qt_credentials_no_{{i}}">
+                                                <option>身份证</option>
+                                                <option>护照</option>
+                                                <option>军官证</option>
+                                                <option>回乡证</option>
+                                            </select>
+                                            <input type="text" name="credentials_no_{{i}}" id="qt_credentials_no_{{i}}" class="input-text {required:true, checkCredentials:true, messages:{required:'请填写相关证件号码', checkCredentials:'请填写正确的证件号码'}}" placeholder="请输入证件号">
+                                            <input type="hidden" name="credentials_type[]" id="cr_val_1" value="3">
+                                        </div>
+                                        <div class="warn-box selt-tips" style="display:block;">
+                                            <span class="t">请保证您的证件在有效期内</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-field form-gender" style="display: block;">
+                                    <label for="" class="labl-text">性别：</label>
+                                    <div class="input-cgroup gender-group">
+                                        <label class="item-check gender-left">
+                                            <input class="input-radio" type="radio" name="person_sex_{{i}}" value="男" checked="checked">
+                                            <span class="input-hack icon-d icon-hackr-d"></span>
+                                            <span class="t">男</span>
+                                        </label>
+                                        <label class="item-check gender-left">
+                                            <input class="input-radio" type="radio" name="person_sex_{{i}}" value="女">
+                                            <span class="input-hack icon-d icon-hackr-d"></span>
+                                            <span class="t">女</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-field" style="display: block;">
+                                    <label for="qt_birthday_{{i}}" class="labl-text">生日：</label>
+
+                                    <div class="input-cgroup">
+                                        <div class="input-append date form_datetime">
+                                            <input class="input-text datepicker" name="qt_birthday_{{i}}" size="16" type="text" value="" data-date-format="yyyy-mm-dd" readonly placeholder="请选择出生日期">
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pasger-actions" style="display: none;">
+                            <span class="clear-input">清空</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div></div>
+            </div>
+
+
+        </div>
+
+
+        <div class="col-xs-3">
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

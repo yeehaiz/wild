@@ -26,7 +26,7 @@
 
 .contact-main {
   padding: 0 10px 10px 13px;
-  background-color: #bcbcbc;
+  background-color: #f3f6f9;
   border: 1px solid #e4e9ee;
   position: relative;
   overflow: hidden;
@@ -80,6 +80,7 @@
 }
 
 
+
 .item-check .input-hack {
   position: absolute;
   top: 4px;
@@ -89,6 +90,21 @@
 }
 
 
+.form-wrap {
+  border: 1px solid #dadfe2;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.title-box {
+  background-color: #f7fafb;
+  line-height: 24px;
+  padding: 10px 0 10px 26px;
+  font-size: 16px;
+}
+.main-box {
+  padding: 20px 24px 45px;
+}
 
 .pasger-list .pasger-box {
   padding-top: 20px;
@@ -124,9 +140,50 @@
   margin-top: 14px;
 }
 
+.pasger-box .pasger-form-2 .form-field.form-first {
+  margin-top: 0;
+}
+
+.pasger-box .pasger-form-2 .form-field {
+  margin-top: 14px;
+}
+
+.pasger-box .pasger-form-2 .form-field .labl-text{
+  width: 150px;
+}
+
+.pasger-box .pasger-form-2 .form-field .info-middle{
+  float: left;
+  font-weight: normal;
+  margin-left: 60px;
+  width: 150px;
+  padding: 2px 0 2px 0;
+  text-align: left;
+  display: inline-block;
+  font-size: 20px;
+  color: #ff7200;
+}
+
+.pasger-box .pasger-actions {
+  display: none;
+  position: absolute;
+  right: 15px;
+  top: 20px;
+
+  .clear-input {
+    color: #0a78c3;
+    cursor: pointer;
+
+  }
+}
+.pasger-box:hover .pasger-actions {
+  display: block;
+}
+
+
 .form-field {
   min-height: 32px;
-   zoom: 1;
+  zoom: 1;
 }
 
 .form-field .labl-text {
@@ -144,15 +201,19 @@
 }
 
 
-
-
 .pasger-main{
   background-color: white;
-  padding-bottom: 40px;
 }
 
 .pasger-box .pasger-form .form-field.form-gender {
   margin-top: 5px;
+}
+
+.pasger-box .pasger-no em {
+  font-style: normal;
+  font-size: 20px;
+  color: #ff7200;
+  margin: 0 2px;
 }
 
 .input-cgroup .input-text {
@@ -163,7 +224,16 @@
   line-height: 20px;
 }
 
-.input-cgroup .selt-box {
+.input-cgroup .textarea {
+  width: 320px;
+  height: 60px;
+  float: left;
+  border: 1px solid #dfdfdf;
+  padding: 5px 6px;
+  resize: none;
+}
+
+.input-cgroup .selt-ox {
   height: 32px;
 }
 
@@ -208,4 +278,9 @@
   top: 11px;
   width: 12px;
   height: 12px;
+}
+
+.notic-left {
+  display: inline-block;
+  float:left;
 }

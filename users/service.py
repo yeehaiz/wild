@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from users import models
+from helpers import utils
 
 def user_info(request):
     return {
@@ -17,7 +18,7 @@ def get_frequent_members(user_id):
         'cert_type': fm.cert_type,
         'cert': fm.cert,
         'sex': fm.sex,
-        'birthday': fm.birthday,
+        'birthday': utils.df(fm.birthday),
 
     } for fm in models.FrequentMember \
                       .objects.filter(user_id=user_id)]

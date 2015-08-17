@@ -4,6 +4,18 @@ from django.db import models
 
 
 
+class Equipment(models.Model):
+    name = models.CharField('装备名', max_length=16)
+    rent = models.DecimalField('租金', max_digits=9, decimal_places=2)
+    price = models.DecimalField('价格', max_digits=9, decimal_places=2)
+    storage = models.IntegerField('库存数量')
+    num_out = models.IntegerField('借出数量')
+
+    is_active = models.BooleanField('是否有效', default=True)
+    cre_time = models.DateTimeField('创建时间', auto_now_add=True)
+    upd_time = models.DateTimeField('修改时间', auto_now=True)
+
+
 class Event(models.Model):
     title = models.CharField('标题', max_length=64)
     type_id = models.IntegerField('活动类型')
@@ -18,6 +30,7 @@ class Event(models.Model):
     planning = models.TextField('行程安排')
     fee_desc = models.TextField('费用说明')
     equipment = models.TextField('出行装备')
+    equipments = models.ManyToManyField(Equipment, verbose_name='装备租赁')
 
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
     cre_user_id = models.IntegerField('创建用户ID')
@@ -33,17 +46,6 @@ class Session(models.Model):
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
     upd_time = models.DateTimeField('修改时间', auto_now=True)
 
-
-class Equipment(models.Model):
-    name = models.CharField('装备名', max_length=16)
-    rent = models.DecimalField('租金', max_digits=9, decimal_places=2)
-    price = models.DecimalField('价格', max_digits=9, decimal_places=2)
-    storage = models.IntegerField('库存数量')
-    num_out = models.IntegerField('借出数量')
-
-    is_active = models.BooleanField('是否有效', default=True)
-    cre_time = models.DateTimeField('创建时间', auto_now_add=True)
-    upd_time = models.DateTimeField('修改时间', auto_now=True)
 
 
 class EquipmentGroup(models.Model):

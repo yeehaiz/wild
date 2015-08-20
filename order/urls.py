@@ -10,5 +10,6 @@ urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
 
     url(r'^fill/$', views.fill),
+    url(r'^submit/$', views.submit),
 
 ]

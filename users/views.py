@@ -46,6 +46,7 @@ def login(request):
         request.session['admin'] = user_admin[0].level if user_admin else 0
         request.session['uid'] = user.id
         request.session['username'] = user.username
+        request.session['mobile'] = user.mobile
 
         redirectURL = request.GET.get('redirectURL')
         return HttpResponseRedirect(redirectURL or '/')
@@ -58,6 +59,8 @@ def logout(request):
         del request.session['uid']
     if 'username' in request.session:
         del request.session['username']
+    if 'mobile' in request.session:
+        del request.session['mobile']
 
     return HttpResponseRedirect('/')
 

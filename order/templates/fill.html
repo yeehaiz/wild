@@ -21,6 +21,9 @@
 <script>
  //常用联系人
  var persons = {{frequent_members | jsonify}};
+ var num_apply = {{num_apply}};
+ var price = {{session.event.price}};
+ var equipments = {{equipments | jsonify}};
 </script>
 <script src="{% static "js/order/fill.js" %}"></script>
 
@@ -196,7 +199,7 @@
                                         {% for eqpmnt in equipments %}
                                         <div class="form-field {% if forloop.first %}form-first{% endif %}">
                                             <label class="labl-text">{{eqpmnt.name}}</label>
-                                            <div class="info-middle">￥{{eqpmnt.rent}}</div>
+                                            <div class="info-middle">￥{{eqpmnt.rent | floatformat:"2" }}</div>
                                             <div  class="counter-select" max="{{eqpmnt.stock}}" min="0">
                                                 <span class="delete"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></span>
                                                 <input class="num" name="equipment_{{eqpmnt.id}}" type="text" value="0" readonly="">
@@ -229,6 +232,33 @@
 
 
         <div class="col-xs-3">
+
+            <div class="order-slide">
+                <div class="order-info-wrap">
+	            <div class="order-info-title">支付信息</div>
+                    <div class="order-info-sub" style="border-bottom-style: none;">
+                        <p>
+                            <span class="lefttitle">单价</span>
+                            <span class="righttitle" id="right_price">￥<span>{{session.event.price}}</span> /人</span>
+                        </p>
+                        <p>
+                            <span class="lefttitle">人数</span>
+                            <span class="righttitle" id="right_quantity"><span>{{num_apply}}</span>人</span>
+                        </p>
+                        <p>
+                            <span class="lefttitle">租金</span>
+                            <span class="righttitle" id="right_rent">￥<span>0.00</span></span>
+                        </p>
+
+                    </div>
+                        <div class="order-info-totl clearfix">
+                            <span class="lefttitle">总额</span>
+                            <span class="righttitle" id="good_total_right">
+                                <em title="18534"><b>¥</b><span></span></em>
+                            </span>
+                        </div>
+                </div>
+
         </div>
 
     </div>

@@ -44,27 +44,28 @@
     };
 
 
-    var _counter_select_events = function() {
+    var _counter_select_events = function(jsel, callback) {
 
-        $('.counter-select > .delete').click(function(){
+        jsel.find('> .delete').click(function(){
             var parent = $(this).parent();
             _update(parent, _get_val(parent) -1);
+            if (callback != undefined) {
+                callback(parent);
+            }
         });
 
 
-        $('.counter-select > .add').click(function(){
+        jsel.find('> .add').click(function(){
             var parent = $(this).parent();
             _update(parent, _get_val(parent) +1);
+            if (callback != undefined) {
+                callback(parent);
+            }
         });
 
     };
 
 
-
-
-    $(document).ready(function(){
-        _counter_select_events();
-    });
-
+    this.start_counter_select = _counter_select_events;
 
 })();

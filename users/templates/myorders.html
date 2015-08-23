@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load myfilters %}
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+{% block css %}
+<link rel="stylesheet/less" type="text/css" href="{% static "less/users.less"%}" />
+{% endblock %}
+
+{% block js %}
+<script src="{% static "lib/bootstrap/js/bootstrap-datepicker.js" %}"></script>
+<script src="{% static "js/wild/base.js" %}"></script>
+<script src="{% static "js/users/myorders.js" %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row" style="padding-top: 60px;">
+        <div class="col-xs-3" style="width: 27%">
+
+
+            <div class="menuListL mt36">
+                <div class="listLHead">
+                    <div class="avatar">
+                        <div class="faked-avatar"></div>
+                    </div>
+                    <p class="name">{{user.name}}</p>
+                    <p class="tips"><a href="index.php?app=member&amp;act=profile">完善个人资料</a></p>
+                </div>
+                <div class="orderDl">
+                    <dl class="buyer">
+                        <dt>我是买家</dt>
+                        <dd><a href="/user/myorders/" class="icoOrder active">我的订单</a></dd>
+                        <dd><a href="/user/mycontacts/" class="icoContact">常用联系人</a></dd>
+                        <dd class="last">
+                            <a href="/user/logout/" class="icologout">退出登录</a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-xs-9" style="width: 73%;">
+
+            <div class="myOrderTit">我的订单</div>
+            {% if not orders %}
+            <div class="no-orders"> 没有符合条件的订单! </div>
+            {% endif %}
+            {% for order in orders %}
+            <div class="orderList mb18">
+                <div class="orderListL">
+                    <div class="codeInfo">
+                        <span class="code">订单号：{{order.o.id}}</span>
+                        <span class="state">订单状态：<b><font style="color:#999;">{{order.status_str}}</font></b></span>
+                    </div>
+                    <div class="infoBox">
+                        <div class="thumbnail">
+                            <div class="shadow">
+                                <a href="/event/detail/{{order.o.session.event.id}}/" target="_blank"><img src="{{order.picture}}"></a>
+                            </div>
+                        </div>
+                        <div class="infoBoxR">
+                            <h1><a href="/event/detail/{{order.o.session.event.id}}/" target="_blank">{{order.o.session.event.title}}</a></h1>
+                            <p>
+                                <span class="price">单价：￥{{order.o.session.event.price}}</span>
+                                <span class="num">数量：{{order.o.number}}</span>
+                                <span class="totalPrices">订单总价：￥{{order.o.total}}</span>
+                            </p>
+                            <p>下单时间：{{order.cre_time}}</p>
+                            <p>支付方式：支付宝 </p>
+                            {% ifequal order.o.status 0 %}
+                            <p class="pay-option">
+                                <a class="btn btn-md btn-block btn-highlight" href="/order/confirm/{{order.o.id}}/">付款</a>
+                                <a class="btn btn-md btn-block btn-highlight" href="/order/cancal/{{order.o.id}}/">取消订单</a>
+
+                            </p>
+                            {% endifequal %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="orderListR">
+                    <p class="priceTit">实际支付</p>
+                    <p class="price">￥{{order.o.total}}</p>
+                    <p><a href="buyer_xorder-view-8210" target="_blank" class="more">查看详情</a></p>
+
+                </div>
+            </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

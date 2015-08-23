@@ -12,6 +12,8 @@ urlpatterns = [
     url(r'^login/$', views.login),
     url(r'^logout/$', views.logout),
     url(r'^register/$', views.register),
+    url(r'^myorders/$', views.myorders),
+    url(r'^mycontacts/$', views.mycontacts),
 
     url(r'^verifycode/$', views.sendverifycode),
     url(r'^register/post/$', views.register_post),

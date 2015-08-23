@@ -152,3 +152,6 @@ def month_end_add(dt, months):
     m = (dt.month + months) % 12 + 1
     y = dt.year + (dt.month + months) /12
     return datetime.date(y, m, 1) - datetime.timedelta(1)
+
+def tsf(ts):
+    return ts.strftime('%Y-%m-%d %H:%M:%S')

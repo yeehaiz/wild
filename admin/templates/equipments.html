@@ -1,0 +1,69 @@
+{% extends "admin_base.html" %}
+
+{% load staticfiles %}
+
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+
+        <ul id="equip-tabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class=""><a href="#rentout" id="home-tab" role="tab" data-toggle="tab" aria-controls="rentout" aria-expanded="true">借出</a></li>
+            <li role="presentation" class=""><a href="#giveback" role="tab" id="profile-tab" data-toggle="tab" aria-controls="giveback" aria-expanded="false">归还</a></li>
+            <li role="presentation" class="active"><a href="#manage" role="tab" id="profile-tab" data-toggle="tab" aria-controls="manage" aria-expanded="false">装备管理</a></li>
+        </ul>
+
+
+    <div class="table-box" >
+        <div class="tab-content">
+
+            <div role="tabpanel" class="tab-pane fade" id="rentout" aria-labelledby="rentout-tab">
+                a
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="giveback" aria-labelledby="giveback-tab">
+                b
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="manage" aria-labelledby="manage-tab">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>装备名</th>
+                            <th>原价</th>
+                            <th>租金</th>
+                            <th>库存总数</th>
+                            <th>借出数量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for eqp in equipments %}
+                        <tr>
+                            <td>{{eqp.id}}</td>
+                            <td>{{eqp.name}}</a></td>
+                            <td>{{eqp.price}}</td>
+                            <td>{{eqp.rent}}
+                            <td>{{eqp.storage}}</td>
+                            <td>{{eqp.num_out}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+</div>
+{% endblock %}

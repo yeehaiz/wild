@@ -5,7 +5,8 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
-from event.models import Event, Session
+from event.models import Event, Session, Equipment
+from order.models import Order, OrderEquipment, OrderMember
 from users.service import user_info
 from event.service import get_eventtype_name, get_eventtype_list
 from helpers import utils, snfs, decorators, errors
@@ -171,3 +172,31 @@ def uploadimage(request):
     imgurl = snfs.save_request_file(file)
 
     return HttpResponse(imgurl)
+
+
+@decorators.admin()
+def orders(request):
+    page = int(request.GET.get('page', 1))
+    orders = Order.objects.order_by('-upd_time', 'id')[(page-1)*PAGESIZE: page*PAGESIZE]
+
+    order_count = Order.objects.count()
+    page_count = int(math.ceil(1.0 * order_count / PAGESIZE))
+
+    return render(request, 'orders.html', {
+        'user': user_info(request),
+        'orders': orders,
+        'page': {
+            'prev' : max(1, page -1),
+            'next' : min(page_count, page + 1),
+            'range' : utils.paging_range(page, page_count, NAVCOUNT),
+            'current' : page,
+        }
+    })
+
+@decorators.admin()
+def equipments(request):
+    equipments = Equipment.objects.all()
+    return render(request, 'equipments.html', {
+        'user': user_info(request),
+        'equipments': equipments,
+    })

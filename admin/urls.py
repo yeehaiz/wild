@@ -18,6 +18,10 @@ urlpatterns = [
     url(r'^sessions/add/$', views.sessions_add),
     url(r'^sessions/delete/(\d+)/$', views.sessions_delete),
 
+    url(r'^orders/$', views.orders),
+
+    url(r'^equipments/$', views.equipments),
+
     url(r'^uploadimage/$', views.uploadimage),
 
 ]

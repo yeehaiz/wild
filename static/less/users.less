@@ -1,0 +1,299 @@
+@base-light-color: #EA623C;
+@base-dark-color: #4E4E4E;
+@base-light-active-color: #ff7037;
+
+
+.menuListL {
+  background: #FFF;
+  box-shadow: 0 2px 2px #D4D4D4;
+  margin-top: 36px;
+}
+
+.listLHead {
+  position: relative;
+  margin: 0 18px 34px;
+}
+
+.listLHead .avatar {
+  position: absolute;
+  top: -40px;
+  left: 0;
+}
+.listLHead .avatar .faked-avatar{
+  width: 120px;
+  height: 120px;
+  display: block;
+  background-color:@base-light-color;
+  border-radius: 25px;
+}
+
+
+.listLHead .name {
+  padding-top: 40px;
+  margin-bottom: 5px;
+  font: 18px/18px "Microsoft Yahei";
+  color: #1b2a39;
+  text-indent: 130px;
+}
+
+.listLHead .tips {
+  font-size: 12px;
+  color: #7a7a7a;
+  text-indent: 130px;
+}
+.listLHead .tips a {
+  color: #6C6C6C;
+}
+
+.orderDl {
+  margin: 0 18px;
+  padding-bottom: 35px;
+}
+
+.orderDl dl dt {
+  display: block;
+  font: 18px/40px "Microsoft Yahei";
+  cursor: pointer;
+  background-color: @base-light-color;
+  color: white;
+  text-align: center;
+}
+
+.orderDl .buyer dt {
+  //background: url(../images/ico_order.png) no-repeat 0 0;
+}
+
+.orderDl dl dd {
+  font: 14px/46px "Microsoft Yahei";
+  border-bottom: 1px solid #c3c3c3;
+  text-indent: 75px;
+  color: #6c6c6c;
+}
+
+.orderDl dl dd a {
+  display: block;
+  font: 14px/46px "Microsoft Yahei";
+  color: #6c6c6c;
+}
+
+.orderDl dl dd a.active {
+  color: @base-light-color;
+  text-decoration: none;
+}
+
+.orderDl dl dd.last {
+  border-bottom: 0 none;
+}
+
+
+.myOrderTit {
+  height: 36px;
+  font: 22px/22px "Microsoft Yahei";
+  color: #1b2a39;
+}
+
+.orderList {
+  overflow: hidden;
+  background: #f7f7f7;
+  box-shadow: 0 2px 2px #D4D4D4;
+  margin-bottom: 18px;
+}
+
+.orderList .orderListL {
+  float: left;
+  display: inline;
+  width: 513px;
+  min-height: 185px;
+  _height: 185px;
+  padding-top: 28px;
+  padding-right: 16px;
+  background: #FFF;
+}
+.codeInfo {
+  overflow: hidden;
+  margin: 0 0 18px 25px;
+}
+
+.codeInfo .code {
+  float: left;
+  display: inline;
+  font: 700 14px/16px "Microsoft Yahei";
+  color: @base-light-color;
+}
+.codeInfo .state {
+  float: right;
+  display: inline;
+  font: 12px/14px "Microsoft Yahei";
+  color: #6c6c6c;
+}
+
+.infoBox {
+  margin: 0 0 0 25px;
+}
+
+.thumbnail {
+  display: block;
+  padding: 4px;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+.infoBox .thumbnail {
+  float: left;
+  display: inline;
+  width: 136px;
+  margin-left: 3px;
+}
+.infoBox .thumbnail .shadow {
+  position: relative;
+  height: 76px;
+  background: #d8d8d8;
+}
+
+.infoBox .infoBoxR {
+  float: right;
+  width: 320px;
+}
+
+.infoBox .thumbnail .shadow img {
+  position: absolute;
+  width: 136px;
+  height: 76px;
+}
+
+.infoBox .infoBoxR h1 {
+  font: 14px/16px "Microsoft Yahei";
+  margin: 0;
+  margin-bottom: 5px;
+
+  a {
+    color: #585858;
+  }
+  a:hover{
+    color: #428bca;
+  }
+}
+
+.infoBox .infoBoxR p {
+  font: 12px/25px "Microsoft Yahei";
+  color: #6c6c6c;
+  margin: 0 0 10px;
+}
+
+.pay-option .btn{
+  width: 110px;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.infoBoxR .price {
+  display: inline-block;
+  width: 120px;
+}
+
+.infoBoxR .num {
+  display: inline-block;
+  width: 65px;
+}
+
+.orderList .orderListR {
+  float: right;
+  display: inline;
+  width: 150px;
+  text-align: center;
+}
+
+.orderListR .priceTit {
+  font: 16px/17px "Microsoft Yahei";
+  margin-top: 58px;
+  margin-bottom: 15px;
+  color: @base-light-color;
+}
+
+.orderListR .price {
+  font: 700 24px/25px "Microsoft Yahei";
+  margin-bottom: 15px;
+  color: @base-light-color;
+}
+
+.orderListR .more:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+.orderListR .more {
+  display: inline-block;
+  width: 84px;
+  height: 28px;
+  font: 12px/28px "Microsoft Yahei";
+  color: #6c6c6c;
+  text-indent: 16px;
+}
+
+.no-orders {
+  font-size: 25px;
+  text-align:center;
+  margin-top: 100px;
+}
+
+/********** 常用联系人  ***********/
+
+.contactLayOut {
+  width: 695px;
+  overflow: hidden;
+  margin-left: -12px;
+}
+
+.commonContact {
+  position: relative;
+  float: left;
+  display: inline;
+  margin-left: 12px;
+  width: 335px;
+  height: 222px;
+  margin-bottom: 12px;
+  background: #FFF;
+  box-shadow: 0 2px 2px #D4D4D4;
+}
+.commonContact .edit {
+  position: absolute;
+  top: 23px;
+  right: 25px;
+  width: 120px;
+  text-align: right;
+  color: #6c6c6c;
+}
+.commonContact p {
+  font: 12px/2.3 "Microsoft Yahei";
+  text-indent: 23px;
+}
+
+.commonContact .name {
+  font: 700 20px/22px "Microsoft Yahei";
+  margin-bottom: 8px;
+  margin-top: 20px;
+  color: @base-light-color;
+}
+
+
+.addVisitor {
+  background: @base-light-color;
+  cursor: pointer;
+}
+
+.addVisitor:hover {
+  background-color: @base-light-active-color;
+}
+
+.addVisitor .glyphicon{
+  font-size: 100px;
+  display: block;
+  text-align: center;
+  margin-top: 50px;
+  color: #F5BBAF;
+}

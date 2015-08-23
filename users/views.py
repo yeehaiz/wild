@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import json
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http.response import HttpResponse, HttpResponseRedirect
@@ -7,11 +9,12 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.db.models import Q
 
-from users.models import (User, Admin)
-from users.service import user_info
+from users.models import (User, Admin, FrequentMember)
+from users.service import user_info, get_cert_type, get_sex
 from users import constants
 from helpers import errors, decorators, utils, verifycode
-
+from order.models import Order, OrderMember, OrderEquipment
+from order.service import get_order_status
 
 def login(request):
     if request.method == 'GET':
@@ -144,3 +147,37 @@ def register_post(request):
     request.session['username'] = user.username
 
     return None
+
+@decorators.login
+def myorders(request):
+    uid = request.session['uid']
+    orders = [
+        {
+            'status_str': get_order_status(order.status),
+            'picture': json.loads(order.session.event.covers)[0],
+            'cre_time': utils.tsf(order.cre_time),
+            'o': order,
+        } for order
+        in Order.objects.filter(user_id=uid).order_by('-upd_time')
+    ]
+    return render(request, 'myorders.html', {
+        'user': user_info(request),
+        'orders': orders,
+    });
+
+@decorators.login
+def mycontacts(request):
+    uid = request.session['uid']
+    contacts = [
+        {
+            'c': c,
+            'cert_type': get_cert_type(c.cert_type),
+            'sex': get_sex(c.sex),
+        } for c
+        in FrequentMember.objects.filter(user_id=uid)
+    ]
+
+    return render(request, 'mycontacts.html', {
+        'user': user_info(request),
+        'contacts': contacts,
+    });

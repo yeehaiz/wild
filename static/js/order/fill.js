@@ -236,4 +236,43 @@
 
     });
 
+
+    //右侧浮动开始
+    $(function(){
+        var rslidet = $(".order-slide").offset().top - 10;
+        $(window).scroll(function() {
+            if ($(document).scrollTop() > rslidet) {
+                $(".order-info-wrap").css({top: "10px", position: "fixed"});
+            } else {
+                $(".order-info-wrap").removeAttr("style");
+            }
+        });
+    });
+
+    // 金额相关
+    var equip_rent = {}
+    for (var i=0; i<equipments.length; i++) {
+        equip_rent['equipment_'+equipments[i]['id']] = equipments[i]['rent'];
+    }
+
+    var set_pay_info = function() {
+        var total_price = price * num_apply;
+        var total_rent = 0;
+        var inputs_equip = $('.pasger-form-2 input.num');
+        for (var i=0; i<inputs_equip.length; i++){
+            total_rent += parseInt($(inputs_equip[i]).val()) * equip_rent[$(inputs_equip[i]).attr('name')];
+        }
+
+
+        $('#right_rent  span').text(total_rent);
+        $('#good_total_right span').text(total_price + total_rent);
+
+    };
+
+
+    $(function() {
+        set_pay_info();
+        start_counter_select($('.pasger-form-2 .counter-select'), set_pay_info);
+    });
+
 })();

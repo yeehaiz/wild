@@ -1,0 +1,75 @@
+{% extends "admin_base.html" %}
+
+{% load staticfiles %}
+
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+    <div class="table-box">
+
+        <!--div class="box-header">
+            <a href="/admin/events/add/" type="button" class="btn btn-primary">添加线路</a>
+        </div-->
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>用户手机</th>
+                    <th>活动</th>
+                    <th>人数</th>
+                    <th>总金额</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{order.id}}</td>
+                    <td>{{order.user.username}}</a></td>
+                    <td>{{order.user.mobile}}</td>
+                    <td><a href="/event/detail/{{order.session.event.id}}/">{{order.session.event.title}}</a></td>
+                    <td>{{order.number}}</td>
+                    <td>{{order.total}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <nav>
+        <ul class="pagination">
+
+            <li>
+                <a href="/admin/orders/?page={{page.prev}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {% for p in page.range %}
+            <li class="{% ifequal p page.current %}active{% endifequal %}">
+                <a href="/admin/orders/?page={{p}}">{{p}}</a>
+            </li>
+            {% endfor %}
+
+            <li>
+                <a href="/admin/orders/?page={{page.next}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+</div>
+{% endblock %}

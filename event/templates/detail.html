@@ -74,19 +74,21 @@
 
             <hr class="splider">
 
-            <div class="row tag-title" id="planning">
-                <div class="col-xs-4">
-                    <a href="#planning" class="active">行程安排</a>
-                </div>
-                <div class="col-xs-4">
-                    <a href="#fee-desc">费用说明</a>
-                </div>
-                <div class="col-xs-4">
-                    <a href="#equipment">出行装备</a>
+            <div id="planning">
+                <div class="row tag-title" id="planning-wrap">
+                    <div class="col-xs-4">
+                        <a href="#planning" class="active">行程安排</a>
+                    </div>
+                    <div class="col-xs-4">
+                        <a href="#fee-desc">费用说明</a>
+                    </div>
+                    <div class="col-xs-4">
+                        <a href="#equipment">出行装备</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="date-box" >
+            <div class="date-box" id="q0">
                 {% for dayplan in event.planning %}
                 <div class="date-wrapper">
                     <div class="date-title">
@@ -104,7 +106,7 @@
                 {% endfor %}
             </div>
 
-            <div class="info-box">
+            <div class="info-box" id="q1">
                 <div class="top-title" id="fee-desc">
                     <div>费用说明</div>
                 </div>
@@ -119,7 +121,7 @@
 
             </div>
 
-            <div class="info-box">
+            <div class="info-box" id="q2">
                 <div class="top-title" id="equipment">
                     <div>出行装备</div>
                 </div>
@@ -137,35 +139,36 @@
 
 
         <div class="col-xs-3">
-             <div class="detail-order-box">
-                 <div class="price">￥234</div>
-                 <hr>
-                 <div class="select">
-                     <form method="GET" action="/order/fill/">
-                         <select class="form-control" id="dt-check" name="session_id">
-                             {% for sess in event.sesses %}
-                             <option value="{{sess.session_id}}" places="{{sess.places}}">{{sess.date_desc}}</option>
-                             {% endfor %}
-                         </select>
+            <div class="order-box-wrap">
+                <div class="detail-order-box">
+                    <div class="price">￥234</div>
+                    <hr>
+                    <div class="select">
+                        <form method="GET" action="/order/fill/">
+                            <select class="form-control" id="dt-check" name="session_id">
+                                {% for sess in event.sesses %}
+                                <option value="{{sess.session_id}}" places="{{sess.places}}">{{sess.date_desc}}</option>
+                                {% endfor %}
+                            </select>
 
-                         <div style="margin-top: 15px;">
-                             <span style="float: left; line-height: 34px; margin: 0 15px 0 5px;">人数</span>
+                            <div style="margin-top: 15px;">
+                                <span style="float: left; line-height: 34px; margin: 0 15px 0 5px;">人数</span>
 
-                             <div id="num-check" class="counter-select" max="6" min="1">
-                                 <span class="delete"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></span>
-                                 <input class="num" name="num_apply" type="text" value="1" readonly>
-                                 <span class="add active"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span>
-                             </div>
-                         </div>
+                                <div id="num-check" class="counter-select" max="6" min="1">
+                                    <span class="delete"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></span>
+                                    <input class="num" name="num_apply" type="text" value="1" readonly>
+                                    <span class="add active"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
 
-                         <div style="margin-top: 30px;">
-                             <button type="submit" class="btn btn-lg btn-block btn-highlight" style="border-radius: 0;">立即预定</button>
-                         </div>
+                            <div style="margin-top: 30px;">
+                                <button type="submit" class="btn btn-lg btn-block btn-highlight" style="border-radius: 0;">立即预定</button>
+                            </div>
 
-                     </form>
-                 </div>
-             </div>
-
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

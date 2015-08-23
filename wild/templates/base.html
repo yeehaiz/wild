@@ -34,8 +34,8 @@
 
                     {% if user.id %}
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">{{user.name}}</a></li>
-                        <li><a href="/user/logout/">登出</a></li>
+                        <li><a href="/user/myorders/">{{user.name}}</a></li>
+                        <li><a href="/user/logout/">退出</a></li>
                         {% if user.admin %}
                         <li><a href="/admin/events/">管理后台</a></li>
                         {% endif %}

@@ -9,6 +9,9 @@ a {
 a:hover {
   text-decoration: none;
 }
+a:active, a:focus{
+  text-decoration: none;
+}
 
 p {
   margin: 0;
@@ -19,7 +22,7 @@ body {
 }
 
 .container {
-  width: 980px;
+  width: 1010px;
 }
 
 
@@ -97,7 +100,15 @@ body {
 }
 
 
+.nav>li>a {
+  padding-left: 10px;
+  padding-right: 10px;
 
+}
+
+.nav>li>a:hover{
+  background-color: black;
+}
 
 
 /***************************   列表页  *****************************/
@@ -176,6 +187,7 @@ body {
 
       li:hover, li.active {
         background-image: url(/static/images/base/active.png);
+
       }
   }
 
@@ -186,7 +198,6 @@ body {
 
   .menu-value-text {
     background-color: #F4B09B;
-    margin-left: 75px;
 
     ul {
       height: 36px;
@@ -331,6 +342,16 @@ body {
 
 /***************************   详情页  *****************************/
 
+#planning-wrap {
+  width: 715px;
+  z-index: 1;
+  background-color: #E6E6E6;
+}
+
+#planning {
+  height: 53px;
+}
+
 .carousel-indicators {
   width: 25%;
   right: 0;
@@ -371,7 +392,7 @@ body {
 @tag-title-space: 5px;
 .tag-title {
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
 
   margin-left: -@tag-title-space;
   margin-right: -@tag-title-space;
@@ -455,10 +476,15 @@ body {
   margin-bottom: 25px;
 }
 
+.order-box-wrap {
+  width: 215px;
+  margin-top: 30px;
+}
+
 .detail-order-box {
+  width: inherit;
   background-color: white;
   border-top: solid 4px @base-light-color;
-  margin-top: 30px;
 
   .price {
     color: @base-light-color;

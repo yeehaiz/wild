@@ -2,6 +2,7 @@
 
 from users import models
 from helpers import utils
+import constants
 
 def user_info(request):
     return {
@@ -39,3 +40,10 @@ def save_frequent_members(user, persons):
                 birthday = p['birthday']
             )
             fm.save()
+
+
+def get_cert_type(cert_type):
+    return constants.CERT_TYPES.get(cert_type, '未知')
+
+def get_sex(sex):
+    return constants.SEXES.get(sex, '未知')

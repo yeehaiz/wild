@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load myfilters %}
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+{% block css %}
+<link rel="stylesheet/less" type="text/css" href="{% static "less/order.less"%}" />
+{% endblock %}
+
+{% block js %}
+<script src="{% static "lib/bootstrap/js/bootstrap-datepicker.js" %}"></script>
+<script src="{% static "js/wild/base.js" %}"></script>
+<script src="{% static "js/order/confirm.js" %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="processor">
+            <div class="col-xs-4">
+                <div class="step">STEP 1 填写订单</div>
+            </div>
+            <div class="col-xs-4">
+                <div class="step active">
+                    STEP 2 确认支付
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="step">
+                    STEP 3 完成订单
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="order-title">
+                <div class="bigtitle">{{order.session.event.title}}</div>
+                <div class="info-title clear_b">
+                    <span>出行日期：{{start_dt.week}}</span>
+                    <span>人数：{{num_apply}}人</span>
+                    <b>总金额：<i>￥{{order.total}}</i></b>
+                </div>
+            </div>
+
+            <form method="POST" id="xorder_pay_form" action="">
+                <div class="boxborder">
+                    <div class="boxordertitle clear_b">
+                        <span class="ftitle">选择支付方式</span>
+                        <span class="notetitle">请您在2小时内完成付款，否则订单会自动取消</span>
+                    </div>
+                    <div class="paymode clear_b hover" id="zf1">
+                        <input type="radio" name="payment" value="1" id="r_1" style="display:none;" checked="checked">
+                        <span class="radiobox"></span>
+                        <span class="branklogo"><img src="{% static "images/order/logo.gif"%}"></span>
+                        <span class="branklogoname">支付宝</span>
+                        <div class="zfbhover" style="height: 52px; display: block;">
+                            <span class="zfxj">
+                                支付
+                                <b>￥{{order.total}}</b>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="downlinebrank" id="onlinebrank" style="display: block;">
+                        <button type="submit" class="btn btn-lg btn-block btn-highlight" style="border-radius: 0;">立即预定</button>
+
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

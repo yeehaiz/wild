@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load myfilters %}
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+{% block css %}
+<link rel="stylesheet/less" type="text/css" href="{% static "less/users.less"%}" />
+{% endblock %}
+
+{% block js %}
+<script src="{% static "lib/bootstrap/js/bootstrap-datepicker.js" %}"></script>
+<script src="{% static "js/wild/base.js" %}"></script>
+<script src="{% static "js/users/mycontacts.js" %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row" style="padding-top: 60px;">
+        <div class="col-xs-3" style="width: 27%">
+
+
+            <div class="menuListL mt36">
+                <div class="listLHead">
+                    <div class="avatar">
+                        <div class="faked-avatar"></div>
+                    </div>
+                    <p class="name">{{user.name}}</p>
+                    <p class="tips"><a href="index.php?app=member&amp;act=profile">完善个人资料</a></p>
+                </div>
+                <div class="orderDl">
+                    <dl class="buyer">
+                        <dt>我是买家</dt>
+                        <dd><a href="/user/myorders/" class="icoOrder">我的订单</a></dd>
+                        <dd><a href="/user/mycontacts/" class="icoContact active">常用联系人</a></dd>
+                        <dd class="last">
+                            <a href="/user/logout/" class="icologout">退出登录</a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-xs-9" style="width: 73%;">
+
+            <div class="myOrderTit">常用联系人</div>
+            </div>
+            <div class="contactLayOut">
+                {% for contact in contacts %}
+                <div class="commonContact">
+                    <span class="edit">
+                        <a href="javascript:void(0);" id="edit_btn_3667">编辑</a>
+                        <a href="javascript:void(0);" id="drop_btn_3667">删除</a>
+                    </span>
+                    <p class="name"><span id="p_3667_name">{{contact.c.name}}</span></p>
+                    <p class="ti2em">手机：<span id="p_3667_phone">{{contact.c.mobile}}</span></p>
+                    <p>证件类型：身份证<span style="display:none;" id="p_3667_ctype">{{contact.cert_type}}</span></p>
+                    <p>证件号码：<span id="p_3667_cno">{{contact.c.cert}}</span></p>
+                    <p class="ti2em">性别：<span id="p_3667_sex">{{contact.sex}}</span></p>
+                    <p>出生日期：<span id="p_3667_birthday">{{contact.c.birthday | date:"Y-m-d"}}</span></p>
+                </div>
+                {% endfor %}
+
+                <div class="commonContact addVisitor" id="add_person">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </div>
+            </div>
+
+
+    </div>
+</div>
+
+
+</div>
+
+{% endblock %}

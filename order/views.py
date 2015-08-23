@@ -50,7 +50,7 @@ def fill(request):
     equipments = [{
         'id': eqpmnt.id,
         'name': eqpmnt.name,
-        'rent': eqpmnt.rent,
+        'rent': float(eqpmnt.rent),
         'stock': eqpmnt.storage - eqpmnt.num_out,
     } for eqpmnt in session.event.equipments.all()]
 
@@ -85,7 +85,7 @@ def submit(request):
         num_apply = int(request.POST.get('num_apply'))
         assert num_apply > 0
     except:
-        raise errors.ApiError('提交数据有误')
+        raise errors.ApiError('订单有误')
 
     # 场次操作
     session = Session.objects.select_for_update().filter(id=session_id)
@@ -130,6 +130,9 @@ def submit(request):
     for eqpmnt in equipments:
         rent_cnt = request.POST.get('equipment_%d' % eqpmnt.id, '0')
         rent_cnt = utils.parseInt(rent_cnt) or 0
+        if rent_cnt < 0:
+            raise errors.ApiError('订单有误')
+
         equip_rent[eqpmnt.id] = rent_cnt
 
         if eqpmnt.storage < eqpmnt.num_out + rent_cnt:
@@ -140,14 +143,19 @@ def submit(request):
     # 订单创建
     uid = request.session.get('uid')
     user = User.objects.get(id=uid)
+    apply_fee = get_event_fee(session.event, persons)
+    equipment_rent = get_equipment_rent(equipments, equip_rent)
+
     order = Order(user = user,
                   session = session,
                   number = num_apply,
                   contact_name = contacts_name,
                   contact_mobile = contacts_mobile,
                   comment = comment,
-                  apply_fee = get_event_fee(session.event, persons),
-                  equipment_rent = get_equipment_rent(equipments, equip_rent))
+                  apply_fee = apply_fee,
+                  equipment_rent = equipment_rent,
+                  total = apply_fee + equipment_rent)
+
     order.save()
 
     for p in persons:
@@ -170,4 +178,28 @@ def submit(request):
     # 保存常用联系人
     save_frequent_members(user, persons)
 
-    return {'url': '/order/pay/%d/' % order.id}
+    return {'url': '/order/confirm/%d/' % order.id}
+
+@decorators.login
+def confirm(request, oid):
+    uid = request.session.get('uid')
+    orders = Order.objects.filter(id=int(oid), user_id=uid)
+    try:
+        assert len(orders) > 0
+        order = orders[0]
+        assert order.status == 0     # 待支付
+    except AssertionError:
+        return render(request, 'error_info.html', {
+            'user': user_info(request),
+            'error': '页面不存在',
+        })
+
+    return render(request, 'confirm.html', {
+        'user': user_info(request),
+        'order': order,
+        'num_apply': order.ordermember_set.count(),
+        'start_dt': {
+            'date': utils.df(order.session.start_dt),
+            'week': utils.df_week(order.session.start_dt),
+        },
+    });

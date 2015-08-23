@@ -18,6 +18,7 @@ class Order(models.Model):
 
     apply_fee= models.DecimalField('报名费', max_digits=9, decimal_places=2)
     equipment_rent = models.DecimalField('装备租金', max_digits=9, decimal_places=2)
+    total = models.DecimalField('总金额', max_digits=9, decimal_places=2)
 
     equipment_status = models.IntegerField('装备状态', choices=EQPMNT_STATUSES, default=0)
     status = models.IntegerField('订单状态', choices=ORDER_STATUSES, default=0)

@@ -150,4 +150,6 @@ SNFS_DIR = os.path.join(BASE_DIR, "static", "snfs")
 SMSS = {
     'url': 'http://yunpian.com/v1/sms/send.json',
     'apikey': private.SMSS_APIKEY,
+    'host': 'yunpian.com',
+    'sms_send_uri': '/v1/sms/send.json',
 }

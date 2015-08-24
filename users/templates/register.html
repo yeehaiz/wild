@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
+{% load compile_static %}
 
 
 {% block title %}
@@ -8,7 +9,7 @@
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet/less" type="text/css" href="{% static "less/register.less""%}" />
+<link rel="stylesheet" href="{% static "" %}{% compile "less/register.less" %}" />
 {% endblock %}
 
 {% block js %}

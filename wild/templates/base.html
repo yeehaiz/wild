@@ -2,8 +2,9 @@
 <html>
     <head>
         {% load staticfiles %}
+        {% load compile_static %}
         <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet/less" type="text/css" href="{% static "less/base.less"%}" />
+        <link rel="stylesheet" href="{% static "" %}{% compile "less/base.less"%}" />
         {% block css %}{% endblock %}
 
         <title>{% block title %}{% endblock %}</title>
@@ -58,7 +59,6 @@
 
         <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
         <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script src="http://cdn.bootcss.com/less.js/1.7.0/less.min.js"></script>
         {% block js %}{% endblock %}
     </body>
 

@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
-
+{% load compile_static %}
 
 {% block title %}
 野孩子
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet/less" type="text/css" href="{% static "less/login.less""%}" />
+<link rel="stylesheet" href="{% static "" %}{% compile "less/login.less" %}" />
 {% endblock %}
 
 {% block js %}

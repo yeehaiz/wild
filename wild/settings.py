@@ -49,6 +49,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # by yxdong
+    'static_precompiler',
+
     'wild',
     'event',
     'order',
@@ -145,6 +147,15 @@ STATICFILES_DIRS = (
 
 SNFS_URL = '/static/snfs/'
 SNFS_DIR = os.path.join(BASE_DIR, "static", "snfs")
+
+# compile
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'static_precompiler.finders.StaticPrecompilerFinder',
+)
+STATIC_PRECOMPILER_ROOT = os.path.join(BASE_DIR, "static")
 
 # smss service
 SMSS = {

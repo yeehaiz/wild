@@ -2,8 +2,9 @@
 <html>
     <head>
         {% load staticfiles %}
+        {% load compile_static %}
         <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet/less" type="text/css" href="{% static "less/admin_base.less""%}" />
+        <link rel="stylesheet" type="text/css" href="{% static "" %}{% compile "less/admin_base.less" %}" />
         <link rel="stylesheet" type="text/css" href="{% static "lib/uploader/uploader.css"%}" />
         {% block css %}{% endblock %}
 
@@ -47,7 +48,6 @@
         <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
         <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
-        <script src="http://cdn.bootcss.com/less.js/1.7.0/less.min.js"></script>
 
         <script src="http://aui.github.io/artTemplate/dist/template.js"></script>
         <script src="{% static "lib/uploader/uploader.js" %}"></script>

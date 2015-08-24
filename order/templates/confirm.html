@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 {% load myfilters %}
+{% load compile_static %}
 
 
 {% block title %}
@@ -10,7 +11,7 @@
 
 
 {% block css %}
-<link rel="stylesheet/less" type="text/css" href="{% static "less/order.less"%}" />
+<link rel="stylesheet" href="{% static "" %}{% compile "less/order.less" %}" />
 {% endblock %}
 
 {% block js %}

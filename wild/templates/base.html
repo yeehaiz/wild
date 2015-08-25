@@ -3,7 +3,8 @@
     <head>
         {% load staticfiles %}
         {% load compile_static %}
-        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static "lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" %}">
+        <link rel="stylesheet" href="{% static "lib/bootstrap-3.3.5-dist/css/non-responsive.css" %}">
         <link rel="stylesheet" href="{% static "" %}{% compile "less/base.less"%}" />
         {% block css %}{% endblock %}
 
@@ -22,7 +23,7 @@
                         <img src="{% static "images/base/logo.jpg"%}" style="height:50px;">
                     </a>
                 </div>
-                <nav class="collapse navbar-collapse bs-navbar-collapse">
+                <div class="">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="/">主页</a></li>
                         <li><a href="#">国际旅行</a></li>
@@ -49,7 +50,7 @@
                     </ul>
 
                     {% endif %}
-                </nav>
+                </div>
             </div>
         </div>
 
@@ -57,8 +58,8 @@
 
         {% block content %}{% endblock %}
 
-        <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-        <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="{% static "lib/jquery/jquery.min.js" %}"></script>
+        <script src="{% static "lib/bootstrap-3.3.5-dist/js/bootstrap.min.js" %}"></script>
         {% block js %}{% endblock %}
     </body>
 

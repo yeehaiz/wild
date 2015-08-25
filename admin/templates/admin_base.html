@@ -3,7 +3,7 @@
     <head>
         {% load staticfiles %}
         {% load compile_static %}
-        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static "lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" %}">
         <link rel="stylesheet" type="text/css" href="{% static "" %}{% compile "less/admin_base.less" %}" />
         <link rel="stylesheet" type="text/css" href="{% static "lib/uploader/uploader.css"%}" />
         {% block css %}{% endblock %}
@@ -45,11 +45,10 @@
 
         {% block content %}{% endblock %}
 
-        <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-        <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
-
-        <script src="http://aui.github.io/artTemplate/dist/template.js"></script>
+        <script src="{% static "lib/jquery/jquery.min.js" %}"></script>
+        <script src="{% static "lib/bootstrap-3.3.5-dist/js/bootstrap.min.js" %}"></script>
+        <script src="{% static "lib/jquery/jquery.validate.js" %}"></script>
+        <script src="{% static "lib/jquery/template.js" %}"></script>
         <script src="{% static "lib/uploader/uploader.js" %}"></script>
 
         {% block js %}{% endblock %}

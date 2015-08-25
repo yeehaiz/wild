@@ -12,41 +12,43 @@
 
 {% block content %}
 <div id="main-menu">
-    <div class="menu-container">
-        <div class="nav-menu">
-            <div class="menu-value menu-value-icon">
-                <ul>
-                    {% for type in event_types %}
+    <div class="container">
+        <div class="menu-container">
+            <div class="nav-menu">
+                <div class="menu-value menu-value-icon">
+                    <ul>
+                        {% for type in event_types %}
 
-                    <li class="{% ifequal type.id filter.event_type_id %}active{% endifequal %}">
-                        <a href="/event/lists/?type={{type.id}}&peroid={{filter.peroid_type_id}}">
-                            <img src="{{type.icon}}" %}">
-                        </a>
-                    </li>
-                    {% endfor %}
+                        <li class="{% ifequal type.id filter.event_type_id %}active{% endifequal %}">
+                            <a href="/event/lists/?type={{type.id}}&peroid={{filter.peroid_type_id}}">
+                                <img src="{{type.icon}}" %}">
+                            </a>
+                        </li>
+                        {% endfor %}
 
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="nav-menu">
-            <div class="menu-value menu-value-text">
-                <ul>
-                    {% for peroid in peroid_types %}
-                    <li class="{% ifequal peroid.id filter.peroid_type_id %}active{% endifequal %}">
-                        <a href="/event/lists/?type={{filter.event_type_id}}&peroid={{peroid.id}}">{{peroid.name}}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
+            <div class="nav-menu">
+                <div class="menu-value menu-value-text">
+                    <ul>
+                        {% for peroid in peroid_types %}
+                        <li class="{% ifequal peroid.id filter.peroid_type_id %}active{% endifequal %}">
+                            <a href="/event/lists/?type={{filter.event_type_id}}&peroid={{peroid.id}}">{{peroid.name}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>
 
 <div class="container">
     <div class="row">
-        <div class="col-md-9" style="padding-top: 30px;">
+        <div class="col-xs-9" style="padding-top: 30px;">
 
             {% for event in events %}
             <div class="wd-event">
@@ -107,7 +109,7 @@
 
 
         </div>
-        <div class="col-md-3" style="border: solid 1px gray; height: 1000px">
+        <div class="col-xs-3" style="border: solid 1px gray; height: 1000px">
         </div>
     </div>
 </div>

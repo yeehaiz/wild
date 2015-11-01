@@ -3,6 +3,7 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 
 from event.models import Event, Session, Equipment
@@ -127,6 +128,7 @@ def sessions(request, event_id):
             'end_dt': utils.df(utils.date_add(sess.start_dt, sess.event.days)),
             'num_apply': sess.num_apply,
             'cre_time': str(sess.cre_time),
+            'auto': sess.auto,
         } for sess
         in Session.objects.filter(event_id=event_id).order_by('-start_dt')
     ]
@@ -174,24 +176,66 @@ def uploadimage(request):
     return HttpResponse(imgurl)
 
 
-@decorators.admin()
-def orders(request):
-    page = int(request.GET.get('page', 1))
-    orders = Order.objects.order_by('-upd_time', 'id')[(page-1)*PAGESIZE: page*PAGESIZE]
 
-    order_count = Order.objects.count()
-    page_count = int(math.ceil(1.0 * order_count / PAGESIZE))
+
+@decorators.admin()
+def sessions_orders(request, sid):
+    orders = [
+        {
+            'id': order.id,
+            'username': order.user.username,
+            'contact_name': order.contact_name,
+            'contact_mobile': order.contact_mobile,
+            'male_num': order.ordermember_set.filter(sex='m').count(),
+            'female_num': order.ordermember_set.filter(sex='f').count(),
+            'total': order.total,
+            'cre_date': str(order.cre_time.date()),
+            'status': order.status,
+        }
+        for order in Order.objects.filter(session_id=int(sid), status__gt=0).order_by('status', 'cre_time')
+    ]
 
     return render(request, 'orders.html', {
         'user': user_info(request),
         'orders': orders,
-        'page': {
-            'prev' : max(1, page -1),
-            'next' : min(page_count, page + 1),
-            'range' : utils.paging_range(page, page_count, NAVCOUNT),
-            'current' : page,
-        }
     })
+
+@decorators.admin()
+@decorators.jsonapi
+@transaction.atomic
+def orders_status(request):
+    oid = int(request.GET.get('oid'))
+    status = int(request.GET.get('status'))
+    assert status in [1,2,3,4,5]
+    order = Order.objects.get(id=oid)
+
+    # 装备状态修改
+    if order.status == 4 and status != 4:
+        for equip in order.orderequipment_set.all():
+            equip.status = 0
+            equip.save()
+
+    if order.status != 4 and status == 4:
+        for equip in order.orderequipment_set.all():
+            equip.status = 1
+            equip.save()
+
+    order.status = status
+    order.save()
+    return {'msg': 'success'}
+
+@decorators.admin()
+@decorators.jsonapi
+@transaction.atomic
+def auto_approve(request):
+    sid = int(request.GET.get('sid'))
+    auto = int(request.GET.get('auto'))
+    auto = bool(auto)
+    session = Session.objects.get(id=sid)
+    session.auto = auto
+    session.save()
+    return {'msg': 'success'}
+
 
 @decorators.admin()
 def equipments(request):

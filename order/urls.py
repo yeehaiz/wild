@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^fill/$', views.fill),
     url(r'^submit/$', views.submit),
     url(r'^confirm/(\d+)/$', views.confirm),
+    url(r'^cancel/(\d+)/$', views.cancel),
 ]

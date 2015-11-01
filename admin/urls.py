@@ -18,7 +18,9 @@ urlpatterns = [
     url(r'^sessions/add/$', views.sessions_add),
     url(r'^sessions/delete/(\d+)/$', views.sessions_delete),
 
-    url(r'^orders/$', views.orders),
+    url(r'^sessions/orders/(\d+)/$', views.sessions_orders),
+    url(r'^sessions/orders/status/$', views.orders_status),
+    url(r'^sessions/autoapprove/$', views.auto_approve),
 
     url(r'^equipments/$', views.equipments),
 

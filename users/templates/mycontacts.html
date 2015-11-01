@@ -34,11 +34,11 @@
                         <div class="faked-avatar"></div>
                     </div>
                     <p class="name">{{user.name}}</p>
-                    <p class="tips"><a href="index.php?app=member&amp;act=profile">完善个人资料</a></p>
+                    <!--p class="tips"><a href="#">完善个人资料</a></p-->
                 </div>
                 <div class="orderDl">
                     <dl class="buyer">
-                        <dt>我是买家</dt>
+                        <dt>我的部落</dt>
                         <dd><a href="/user/myorders/" class="icoOrder">我的订单</a></dd>
                         <dd><a href="/user/mycontacts/" class="icoContact active">常用联系人</a></dd>
                         <dd class="last">
@@ -59,8 +59,8 @@
                 {% for contact in contacts %}
                 <div class="commonContact">
                     <span class="edit">
-                        <a href="javascript:void(0);" id="edit_btn_3667">编辑</a>
-                        <a href="javascript:void(0);" id="drop_btn_3667">删除</a>
+                        <a href="/user/mycontacts/edit/{{contact.c.id}}/" id="edit_btn_3667">编辑</a>
+                        <a href="/user/mycontacts/del/{{contact.c.id}}/" id="drop_btn_3667">删除</a>
                     </span>
                     <p class="name"><span id="p_3667_name">{{contact.c.name}}</span></p>
                     <p class="ti2em">手机：<span id="p_3667_phone">{{contact.c.mobile}}</span></p>
@@ -71,9 +71,9 @@
                 </div>
                 {% endfor %}
 
-                <div class="commonContact addVisitor" id="add_person">
+                <a href="/user/mycontacts/add/" class="commonContact addVisitor" id="add_person">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </div>
+                </a>
             </div>
 
 

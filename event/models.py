@@ -42,17 +42,7 @@ class Session(models.Model):
     event = models.ForeignKey(Event, verbose_name='活动')
     start_dt = models.DateField('开始日期')
     num_apply = models.IntegerField('已经报名人数', default=0)
+    auto = models.BooleanField('报名自动通过', default=False)
 
-    cre_time = models.DateTimeField('创建时间', auto_now_add=True)
-    upd_time = models.DateTimeField('修改时间', auto_now=True)
-
-
-
-class EquipmentGroup(models.Model):
-    name = models.CharField('组合名', max_length=64)
-    equipments = models.ManyToManyField(Equipment, verbose_name='装备们')
-    discount = models.DecimalField('折扣', max_digits=2, decimal_places=1)
-
-    is_active = models.BooleanField('是否有效', default=True)
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
     upd_time = models.DateTimeField('修改时间', auto_now=True)

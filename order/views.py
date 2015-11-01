@@ -3,12 +3,13 @@
 from django.shortcuts import render
 from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
+from django.http.response import HttpResponse, HttpResponseRedirect
 
 from event.models import Session, Event
 from users.models import User
 from users.service import user_info, get_frequent_members, save_frequent_members
 from helpers import utils, decorators, errors
-from order.service import get_event_fee, get_equipment_rent
+from order.service import get_event_fee, get_equipment_rent, equipment_avaliable
 from order.models import Order, OrderMember, OrderEquipment
 
 import datetime
@@ -30,7 +31,7 @@ def fill(request):
 
     try:
         num_apply = int(num_apply)
-        assert 0 < num_apply <= session.event.places - session.num_apply
+        # assert 0 < num_apply <= session.event.places - session.num_apply
     except:
         return render(request, 'error_info.html', {
             'user': user_info(request),
@@ -51,7 +52,8 @@ def fill(request):
         'id': eqpmnt.id,
         'name': eqpmnt.name,
         'rent': float(eqpmnt.rent),
-        'stock': eqpmnt.storage - eqpmnt.num_out,
+        'stock': equipment_avaliable(eqpmnt, session.start_dt,
+                    utils.date_add(session.start_dt, session.event.days)),
     } for eqpmnt in session.event.equipments.all()]
 
     return render(request, 'fill.html', {
@@ -97,8 +99,8 @@ def submit(request):
     if session.start_dt <= datetime.date.today():
         raise errors.ApiError('您报名的活动场次已过期')
 
-    if session.event.places < session.num_apply + num_apply:
-        raise errors.ApiError('该场次剩余名额为%d，名额不足' % session.event.places - session.num_apply)
+    #if session.event.places < session.num_apply + num_apply:
+    #    raise errors.ApiError('该场次剩余名额为%d，名额不足' % session.event.places - session.num_apply)
 
     session.num_apply += num_apply
     session.save()
@@ -135,16 +137,18 @@ def submit(request):
 
         equip_rent[eqpmnt.id] = rent_cnt
 
-        if eqpmnt.storage < eqpmnt.num_out + rent_cnt:
-            raise errors.ApiError('装备【%s】剩余数量为%d，数量不足' % (eqpmnt.name, eqpmnt.storage - eqpmnt.num_out))
-        eqpmnt.num_out += rent_cnt
-        eqpmnt.save()
+        #if eqpmnt.storage < eqpmnt.num_out + rent_cnt:
+        #    raise errors.ApiError('装备【%s】剩余数量为%d，数量不足' % (eqpmnt.name, eqpmnt.storage - eqpmnt.num_out))
+        # eqpmnt.num_out += rent_cnt
+        # eqpmnt.save()
 
     # 订单创建
     uid = request.session.get('uid')
     user = User.objects.get(id=uid)
     apply_fee = get_event_fee(session.event, persons)
     equipment_rent = get_equipment_rent(equipments, equip_rent)
+    order_status = 3 if session.auto else 1
+    order_status = 5 if session.num_apply > session.event.places else order_status
 
     order = Order(user = user,
                   session = session,
@@ -154,7 +158,8 @@ def submit(request):
                   comment = comment,
                   apply_fee = apply_fee,
                   equipment_rent = equipment_rent,
-                  total = apply_fee + equipment_rent)
+                  total = apply_fee + equipment_rent,
+                  status = order_status)
 
     order.save()
 
@@ -178,7 +183,11 @@ def submit(request):
     # 保存常用联系人
     save_frequent_members(user, persons)
 
-    return {'url': '/order/confirm/%d/' % order.id}
+    if order_status == 3:
+        return {'url': '/order/confirm/%d/' % order.id}
+    else:
+        return {'url': '/user/myorders/'}
+
 
 @decorators.login
 def confirm(request, oid):
@@ -187,7 +196,7 @@ def confirm(request, oid):
     try:
         assert len(orders) > 0
         order = orders[0]
-        assert order.status == 0     # 待支付
+        assert order.status == 3     # 已经审核
     except AssertionError:
         return render(request, 'error_info.html', {
             'user': user_info(request),
@@ -203,3 +212,30 @@ def confirm(request, oid):
             'week': utils.df_week(order.session.start_dt),
         },
     });
+
+
+@decorators.login
+@transaction.atomic
+def cancel(request, oid):
+    uid = request.session.get('uid')
+    orders = Order.objects.filter(id=int(oid), user_id=uid)
+    try:
+        assert len(orders) > 0
+        order = orders[0]
+        assert order.status in [1, 2, 3, 5]     # 可取消状态
+    except AssertionError:
+        return render(request, 'error_info.html', {
+            'user': user_info(request),
+            'error': '页面不存在',
+        })
+
+    session = Session.objects.select_for_update().filter(id=order.session_id)[0]
+    session.num_apply -= order.number
+    session.save()
+    order.status = -1
+    order.save()
+    for order_equipment in order.orderequipment_set.all():
+        order_equipment.status = 0  # 不占库存
+        order_equipment.save()
+
+    return HttpResponseRedirect('/user/myorders/')

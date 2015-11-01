@@ -6,7 +6,7 @@ from users.models import User
 from event.models import Session, Equipment
 
 class Order(models.Model):
-    ORDER_STATUSES = ((0, '待支付'), (1, '已支付'), (-1, '已取消'), (-2, '已退款'))
+    ORDER_STATUSES = ((1, '未审核'), (2, '预审通过'), (3, '已通过'), (4, '报名成功'), (5, '替补'), (-1, '已取消'), (-2, '已退款'))
     EQPMNT_STATUSES = ((0, '待取'), (1, '借出'), (2, '完成'))
 
     user = models.ForeignKey(User, verbose_name='用户')
@@ -21,7 +21,7 @@ class Order(models.Model):
     total = models.DecimalField('总金额', max_digits=9, decimal_places=2)
 
     equipment_status = models.IntegerField('装备状态', choices=EQPMNT_STATUSES, default=0)
-    status = models.IntegerField('订单状态', choices=ORDER_STATUSES, default=0)
+    status = models.IntegerField('订单状态', choices=ORDER_STATUSES, default=1)
     cre_time = models.DateTimeField('创建时间', auto_now_add=True)
     upd_time = models.DateTimeField('更新时间', auto_now=True)
 
@@ -40,6 +40,13 @@ class OrderMember(models.Model):
 
 
 class OrderEquipment(models.Model):
+    ORDER_EQUIPMENT_STATUSES = ((1, '占库存'), (0, '未占库存'))
+
     order = models.ForeignKey(Order, verbose_name='订单')
     equipment = models.ForeignKey(Equipment, verbose_name='装备')
     number = models.IntegerField('数量')
+
+    start_dt = models.DateField('出借日期')
+    end_dt = models.DateField('归还日期')
+
+    status = models.IntegerField('装备租赁状态', choices=ORDER_EQUIPMENT_STATUSES, default=0)

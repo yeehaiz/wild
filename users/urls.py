@@ -14,9 +14,12 @@ urlpatterns = [
     url(r'^register/$', views.register),
     url(r'^myorders/$', views.myorders),
     url(r'^mycontacts/$', views.mycontacts),
+    url(r'^mycontacts/del/(\d+)/$', views.mycontacts_del),
+    url(r'^mycontacts/add/', views.mycontacts_add),
+    url(r'^mycontacts/edit/(\d+)/$', views.mycontacts_edit),
 
     url(r'^verifycode/$', views.sendverifycode),
     url(r'^register/post/$', views.register_post),
     url(r'^register/check_username/$', views.register_check_username),
-
+    url(r'^mycontacts/submit/$', views.mycontacts_submit),
 ]

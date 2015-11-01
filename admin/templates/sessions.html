@@ -8,6 +8,9 @@
 野孩子
 {% endblock %}
 
+{% block js %}
+<script src="{% static "js/admin/sessions.js" %}"></script>
+{% endblock %}
 
 
 {% block content %}
@@ -55,6 +58,7 @@
                     <th>结束日期</th>
                     <th>报名人数</th>
                     <th>创建时间</th>
+                    <th>开启自动审核</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -66,8 +70,10 @@
                     <td>{{sess.end_dt}}</td>
                     <td>{{sess.num_apply}}</td>
                     <td>{{sess.cre_time}}</td>
+                    <td><input class="auto-approve" type="checkbox" sid="{{sess.id}}" {% if sess.auto %}checked{% endif %} /></td>
                     <td>
                         <a href="/admin/sessions/delete/{{sess.id}}/" type="button" class="btn btn-danger">删除</a>
+                        <a href="/admin/sessions/orders/{{sess.id}}/" type="button" class="btn btn-default">订单管理</a>
                     </td>
 
 
@@ -77,8 +83,6 @@
         </table>
 
     </div>
-
-
 
 </div>
 {% endblock %}

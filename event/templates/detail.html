@@ -141,7 +141,7 @@
         <div class="col-xs-3">
             <div class="order-box-wrap">
                 <div class="detail-order-box">
-                    <div class="price">￥234</div>
+                    <div class="price">￥{{event.price}}</div>
                     <hr>
                     <div class="select">
                         <form method="GET" action="/order/fill/">
@@ -154,7 +154,7 @@
                             <div style="margin-top: 15px;">
                                 <span style="float: left; line-height: 34px; margin: 0 15px 0 5px;">人数</span>
 
-                                <div id="num-check" class="counter-select" max="6" min="1">
+                                <div id="num-check" class="counter-select" max="99" min="1">
                                     <span class="delete"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></span>
                                     <input class="num" name="num_apply" type="text" value="1" readonly>
                                     <span class="add active"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span>

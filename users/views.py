@@ -8,6 +8,7 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.db.models import Q
+from django.db import transaction
 
 from users.models import (User, Admin, FrequentMember)
 from users.service import user_info, get_cert_type, get_sex
@@ -158,7 +159,7 @@ def myorders(request):
             'cre_time': utils.tsf(order.cre_time),
             'o': order,
         } for order
-        in Order.objects.filter(user_id=uid).order_by('-upd_time')
+        in Order.objects.filter(user_id=uid, status__gt=0).order_by('-upd_time')
     ]
     return render(request, 'myorders.html', {
         'user': user_info(request),
@@ -181,3 +182,77 @@ def mycontacts(request):
         'user': user_info(request),
         'contacts': contacts,
     });
+
+@decorators.login
+def mycontacts_del(request, mid):
+    uid = request.session['uid']
+    member = FrequentMember.objects.filter(user_id=uid, id=int(mid))
+    if not member:
+        return render(request, 'error_info.html', {
+            'user': user_info(request),
+            'error': '该联系人不存在',
+        })
+
+    member = member[0]
+    member.delete()
+    return HttpResponseRedirect('/user/mycontacts/')
+
+@decorators.login
+def mycontacts_add(request):
+    return render(request, 'mycontacts_edit.html', {})
+
+@decorators.login
+def mycontacts_edit(request, mid):
+    member = FrequentMember.objects.get(id=int(mid))
+    return render(request, 'mycontacts_edit.html', {
+        'mid': mid,
+        'name': member.name,
+        'mobile': member.mobile,
+        'cert_type': member.cert_type,
+        'cert': member.cert,
+        'sex': member.sex,
+        'birthday': member.birthday,
+    })
+
+
+@csrf_exempt
+@decorators.login
+@decorators.jsonapi
+@transaction.atomic
+def mycontacts_submit(request):
+    # 输入
+    person_rules = [
+        ('name', 'person_name',           lambda v: (v if 2<=len(v)<=10 else None), '请填写正确的姓名'),
+        ('mobile', 'person_phone',         lambda v: (v if utils.is_mobile(v) else None ), '请填写正确的手机号'),
+        ('cert_type', 'credentials_type', lambda v: (int(v) if int(v) == 1 else None), '证件类型错误'),
+        ('cert', 'credentials_no',        lambda v: (v if utils.checkIdcard(v)[0] else None), '请填写正确的证件号'),
+        ('sex', 'person_sex',             lambda v: (v if v in ['f', 'm'] else None), '请选择性别'),
+        ('birthday', 'person_birthday',   lambda v: (utils.date_strp(v)), '请填写正确的生日'),
+    ]
+
+    mid = request.POST.get('mid', '')
+    if mid:
+        member = FrequentMember.objects.get(id=int(mid))
+    else:
+        member = FrequentMember()
+        uid = request.session.get('uid')
+        user = User.objects.get(id=uid)
+        member.user = user
+
+    p = {}
+    for bname, fname, transf, errmsg in person_rules:
+        try:
+            p[bname] = transf( request.POST.get('%s_'%(fname, ), '').strip() )
+            assert p[bname]
+        except Exception as e:
+            raise errors.ApiError(errmsg)
+
+    member.name = p['name']
+    member.mobile = p['mobile']
+    member.cert_type = p['cert_type']
+    member.cert = p['cert']
+    member.sex = p['sex']
+    member.birthday = p['birthday']
+    member.save()
+
+    return {'url': '/user/mycontacts/'}

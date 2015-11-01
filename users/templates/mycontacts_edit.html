@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load myfilters %}
+{% load compile_static %}
+
+
+{% block title %}
+野孩子
+{% endblock %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static "" %}{% compile "less/users.less" %}" />
+<link rel="stylesheet" href="{% static "" %}{% compile "less/order.less" %}" />
+{% endblock %}
+
+{% block js %}
+<script src="{% static "lib/bootstrap-3.3.5-dist/js/bootstrap-datepicker.js" %}"></script>
+<script src="{% static "lib/jquery/jquery.metadata.js" %}"></script>
+<script src="{% static "lib/jquery/jquery.validate.js" %}"></script>
+<script src="{% static "js/wild/base.js" %}"></script>
+<script src="{% static "js/users/mycontacts_edit.js" %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row" style="padding-top: 60px;">
+        <div class="col-xs-3" style="width: 27%">
+
+            <div class="menuListL mt36">
+                <div class="listLHead">
+                    <div class="avatar">
+                        <div class="faked-avatar"></div>
+                    </div>
+                    <p class="name">{{user.name}}</p>
+                    <!--p class="tips"><a href="index.php?app=member&amp;act=profile">完善个人资料</a></p-->
+                </div>
+                <div class="orderDl">
+                    <dl class="buyer">
+                        <dt>我的部落</dt>
+                        <dd><a href="/user/myorders/" class="icoOrder">我的订单</a></dd>
+                        <dd><a href="/user/mycontacts/" class="icoContact active">常用联系人</a></dd>
+                        <dd class="last">
+                            <a href="/user/logout/" class="icologout">退出登录</a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-9" style="width: 73%;">
+
+            <form method="POST" id="contact_form" action="/user/mycontacts/submit/">
+                {% csrf_token %}
+                <input type="hidden" name="mid" value="{{mid}}">
+
+
+                <div class="pasger-box pasger-last" id="pasger-box_{{i}}" style="background-color:#fff; padding: 20px 0; margin-top:35px;">
+                    <div class="pasger-con">
+                        <div class="pasger-form">
+                            <div class="form-field form-first">
+                                <label for="qt_name_{{i}}" class="labl-text">姓名：</label>
+                                <div class="input-cgroup">
+                                    <input type="text" name="person_name_{{i}}" id="qt_name_{{i}}" class="input-text {required:true, rangelength:[2,10], messages:{required:'请填写真实的姓名', rangelength:'请填写正确的姓名'}}" placeholder="所填证件的姓名" value="{{name}}">
+                                    <div class="note-tips" title="1、请您准确填写与登记证件上一致的出行人姓名；2、若含有生僻字填写规范如下：若名是生僻字，请将该生僻字和其后的字用拼音代替，如：“赵赟子”填写为“赵yunzi”；若姓是生僻字，则姓名全部以拼音代替，如：“赟子丽”填写为“yunzili”。">
+                                        <i class="icon-d icon-helpg-d"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label for="qt_phone_{{i}}" class="labl-text">手机：</label>
+                                <div class="input-cgroup">
+                                    <input type="text" name="person_phone_{{i}}" id="qt_phone_{{i}}" class="input-text {required:true, checkMobile:true, messages:{required:'请填写手机号', checkMobile:'请填写正确的手机号'}}" placeholder="请确保手机能收到短信" value="{{mobile}}">
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label for="qt_credentials_no_{{i}}" class="labl-text">证件：</label>
+                                <div class="input-cgroup">
+                                    <div class="selt-box">
+                                        <select class="selt-main" name="credentials_type_{{i}}" id="qt_credentials_type_{{i}}">
+                                            <option value="1">身份证</option>
+                                            <!--option value="2">护照</option-->
+                                            <!--option value="3">军官证</option-->
+                                            <!--option value="4">回乡证</option-->
+                                        </select>
+                                        <input type="text" name="credentials_no_{{i}}" id="qt_credentials_no_{{i}}" class="input-text {required:true, checkCredentials:true, messages:{required:'请填写相关证件号码', checkCredentials:'请填写正确的证件号码'}}" placeholder="请输入证件号" value="{{cert}}">
+                                    </div>
+                                    <div class="warn-box selt-tips" style="display:block;">
+                                        <span class="t">请保证您的证件在有效期内</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field form-gender" style="display: block;">
+                                <label for="" class="labl-text">性别：</label>
+                                <div class="input-cgroup gender-group">
+                                    <label class="item-check gender-left">
+                                        <input class="input-radio" type="radio" name="person_sex_{{i}}" value="m" {% ifequal sex 'm' %}checked="checked"{% endifequal %}>
+                                        <span class="t">男</span>
+                                    </label>
+                                    <label class="item-check gender-left">
+                                        <input class="input-radio" type="radio" name="person_sex_{{i}}" value="f" {% ifequal sex 'f' %}checked="checked"{% endifequal %}>
+                                        <span class="t">女</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-field" style="display: block;">
+                                <label for="qt_birthday_{{i}}" class="labl-text">生日：</label>
+
+                                <div class="input-cgroup">
+                                    <div class="input-append date form_datetime">
+                                        <input class="input-text datepicker {required:true, messages:{required:'请填写出生日期'}}" id="qt_birthday_{{i}}" name="person_birthday_{{i}}" type="text" data-date-format="yyyy-mm-dd" readonly placeholder="请选择出生日期" value="{{birthday}}">
+                                        <span class="add-on"><i class="icon-th"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field" style="display: block;">
+                            <button type="submit" class="btn btn-md btn-highlight" style="border-radius: 0;width: 100px;display: inline-block;">提交</button>
+                            <a href="/user/mycontacts/" class="btn btn-md btn-highlight" style="border-radius: 0;width: 100px;display: inline-block;">取消</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+    </div>
+</div>
+
+
+</div>
+
+{% endblock %}

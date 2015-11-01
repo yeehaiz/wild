@@ -176,8 +176,11 @@ def submit(request):
     for eqpmnt in equipments:
         if equip_rent[eqpmnt.id] > 0:
             orderequipment = OrderEquipment(order = order,
-                                        equipment = eqpmnt,
-                                        number = equip_rent[eqpmnt.id])
+                                equipment = eqpmnt,
+                                number = equip_rent[eqpmnt.id],
+                                start_dt = session.start_dt,
+                                end_dt = utils.date_add(session.start_dt, session.event.days),
+            )
             orderequipment.save()
 
     # 保存常用联系人
